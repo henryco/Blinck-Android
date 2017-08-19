@@ -10,6 +10,22 @@ public final class DataAdapter {
 
 	private DataAdapter() {}
 
+
+	public static <T> T adapt(final Object adaptedFrom) {
+
+		Adapter adapter = adaptedFrom.getClass().getAnnotation(Adapter.class);
+		if (adapter == null) throw new RuntimeException(adaptedFrom.getClass().getSimpleName()
+				+ " must be annotated by "+Adapter.class.getSimpleName());
+
+		for (Class<? extends BlinckDataAdapter> adapterClass : adapter.value()) {
+			T result = adapt(adaptedFrom, adapterClass);
+			if (result != null) return result;
+		}
+
+		return null;
+	}
+
+
 	@SuppressWarnings("unchecked")
 	public static <T> T adapt(final Object adaptedFrom,
 							  final Class<? extends BlinckDataAdapter> adapterClass) {
@@ -30,8 +46,7 @@ public final class DataAdapter {
 
 			if (argType == adaptedFrom.getClass()) try {
 				return (T) method.invoke(adapter, adaptedFrom);
-			} catch (Exception e) {
-				e.printStackTrace();
+			} catch (Exception ignored) {
 				return null;
 			}
 		}
