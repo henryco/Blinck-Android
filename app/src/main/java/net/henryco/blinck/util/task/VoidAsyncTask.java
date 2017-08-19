@@ -8,23 +8,20 @@ import android.os.AsyncTask;
 
 public class VoidAsyncTask extends AsyncTask<Void, Void, Void> {
 
-	public interface DoInBackGround {
-		void doInBackground();
-	}
-	private DoInBackGround doInBackGround;
+	private Runnable doInBackGround;
 
 	public VoidAsyncTask() {}
-	public VoidAsyncTask(DoInBackGround doInBackGround) {
-		setDoInBackground(doInBackGround);
+	public VoidAsyncTask(Runnable doInBackGround) {
+		setBackgroundTask(doInBackGround);
 	}
 
 	@Override
 	protected Void doInBackground(Void... params) {
-		if (doInBackGround != null) doInBackGround.doInBackground();
+		if (doInBackGround != null) doInBackGround.run();
 		return null;
 	}
 
-	public VoidAsyncTask setDoInBackground(DoInBackGround doInBackGround) {
+	public VoidAsyncTask setBackgroundTask(Runnable doInBackGround) {
 		this.doInBackGround = doInBackGround;
 		return this;
 	}

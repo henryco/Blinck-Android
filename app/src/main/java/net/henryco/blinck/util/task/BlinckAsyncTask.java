@@ -1,29 +1,27 @@
 package net.henryco.blinck.util.task;
 
 import android.os.AsyncTask;
+import net.henryco.blinck.util.function.BlinckFunction;
 
 /**
  * Created by HenryCo on 07/05/17.
  */
 
-public class BlinckAsyncTask<T, U, Z> extends AsyncTask<T, U, Z> {
+public class BlinckAsyncTask<Params, Progress, Result> extends AsyncTask<Params, Progress, Result> {
 
-	public interface DoInBackGround<Q, B> {
-		Q doInBackground(B... params);
-	}
-	private DoInBackGround<Z, T> doInBackGround;
+	private BlinckFunction<Result, Params[]> doInBackGround;
 
 	public BlinckAsyncTask() {}
-	public BlinckAsyncTask(DoInBackGround<Z, T> doInBackGround) {
-		setDoInBackground(doInBackGround);
+	public BlinckAsyncTask(BlinckFunction<Result, Params[]> doInBackGround) {
+		setBackgroundTask(doInBackGround);
 	}
 
 	@SafeVarargs @Override
-	protected final Z doInBackground(T... params) {
-		return doInBackGround != null ? doInBackGround.doInBackground(params) : null;
+	protected final Result doInBackground(Params... params) {
+		return doInBackGround != null ? doInBackGround.apply(params) : null;
 	}
 
-	public BlinckAsyncTask<T, U, Z> setDoInBackground(DoInBackGround<Z, T> doInBackGround) {
+	public BlinckAsyncTask<Params, Progress, Result> setBackgroundTask(BlinckFunction<Result, Params[]> doInBackGround) {
 		this.doInBackGround = doInBackGround;
 		return this;
 	}
