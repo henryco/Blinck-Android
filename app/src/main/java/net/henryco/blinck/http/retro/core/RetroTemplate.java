@@ -10,22 +10,30 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public final class RetroTemplate {
 
+	public String testBaseUrlValue;
+
 	private Converter.Factory converterFactory = null;
 	private String baseURL = null;
 
 
 	private Retrofit createRetrofit(Class<?> retroServiceClass) {
 		return new Retrofit.Builder()
-				.baseUrl(baseURL == null ? processAnnotationURL(retroServiceClass) : baseURL)
+				.baseUrl(processAnnotationURL(retroServiceClass, baseURL))
 				.addConverterFactory(converterFactory == null ? GsonConverterFactory.create() : converterFactory)
 		.build();
 	}
 
-	private String processAnnotationURL(Class<?> retroServiceClass) {
+	private String processAnnotationURL(Class<?> retroServiceClass, String baseURL) {
+
+		if (baseURL != null) {
+			testBaseUrlValue = baseURL;
+			return baseURL;
+		}
 
 		RetroURL retroServiceClassAnnotation = retroServiceClass.getAnnotation(RetroURL.class);
 		if (retroServiceClassAnnotation == null) throw new RuntimeException(retroServiceClass.getSimpleName() + " " +
 				"must be annotated by "+RetroURL.class.getSimpleName());
+		testBaseUrlValue = retroServiceClassAnnotation.value();
 		return retroServiceClassAnnotation.value();
 	}
 
