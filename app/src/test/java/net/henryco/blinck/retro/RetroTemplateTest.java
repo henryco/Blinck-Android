@@ -1,21 +1,25 @@
 package net.henryco.blinck.retro;
 
-import android.support.test.runner.AndroidJUnit4;
 import junit.framework.Assert;
-import net.henryco.blinck.http.retro.core.RetroTemplate;
-import net.henryco.blinck.http.retro.core.RetroURL;
+import net.henryco.blinck.util.retro.RetroTemplate;
+import net.henryco.blinck.util.retro.RetroURL;
+import net.henryco.sqlightning.BuildConfig;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-/**
- * Created by HenryCo on 19/08/17.
- */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@RunWith(RobolectricTestRunner.class)
+@Config(constants = BuildConfig.class, manifest = "app/src/main/AndroidManifest.xml")
 
-@RunWith(AndroidJUnit4.class)
 public class RetroTemplateTest {
 
-	@RetroURL("http://127.0.0.1:8080")
+
+	@RetroURL("http://127.0.0.1:8060")
 	private interface RetroServiceAnnotated {}
 
 	private interface RetroServiceNotAnnotated {}
@@ -43,7 +47,7 @@ public class RetroTemplateTest {
 	public void creationTest3() {
 		RetroServiceNotAnnotated service =
 				new RetroTemplate().setBaseURL("http://127.0.0.1:8080")
-		.create(RetroServiceNotAnnotated.class);
+						.create(RetroServiceNotAnnotated.class);
 
 		Assert.assertNotNull(service);
 	}
@@ -75,7 +79,7 @@ public class RetroTemplateTest {
 		RetroTemplate retroTemplate = new RetroTemplate();
 		retroTemplate.create(RetroServiceAnnotated.class);
 
-		Assert.assertEquals("http://127.0.0.1:8080", retroTemplate.testBaseUrlValue);
+		Assert.assertEquals("http://127.0.0.1:8060", retroTemplate.testBaseUrlValue);
 	}
 
 	@Test
@@ -94,5 +98,4 @@ public class RetroTemplateTest {
 
 		Assert.assertEquals("http://127.0.0.1:3333", retroTemplate.testBaseUrlValue);
 	}
-
 }

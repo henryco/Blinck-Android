@@ -1,4 +1,4 @@
-package net.henryco.blinck.http.retro.core;
+package net.henryco.blinck.util.retro;
 
 import java.lang.annotation.*;
 
@@ -10,5 +10,5 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 public @interface RetroURL {
 
-	String value();
+	String value() default "http://127.0.0.1:8080";
 }

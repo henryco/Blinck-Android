@@ -1,4 +1,4 @@
-package net.henryco.blinck.http.retro.core;
+package net.henryco.blinck.util.retro;
 
 import retrofit2.Converter;
 import retrofit2.Retrofit;
