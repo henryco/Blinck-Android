@@ -2,7 +2,7 @@ package net.henryco.blinck.modules.login;
 
 import dagger.Module;
 import dagger.Provides;
-import net.henryco.blinck.modules.login.http.BlinckLoginService;
+import net.henryco.blinck.modules.login.service.BlinckLoginService;
 import net.henryco.blinck.util.retro.RetroTemplate;
 
 import javax.inject.Singleton;

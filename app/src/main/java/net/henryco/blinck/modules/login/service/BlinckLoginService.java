@@ -1,4 +1,4 @@
-package net.henryco.blinck.modules.login.http;
+package net.henryco.blinck.modules.login.service;
 
 import net.henryco.blinck.util.retro.RetroURL;
 import retrofit2.Call;
