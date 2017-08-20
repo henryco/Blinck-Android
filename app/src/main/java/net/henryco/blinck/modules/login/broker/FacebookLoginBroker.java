@@ -57,7 +57,7 @@ public class FacebookLoginBroker {
 
 				@Override
 				public void onCancel() {
-					enableLoginButton();
+					reset();
 					if (onCancel != null)
 						onCancel.run();
 					consumer.process(new BrokerResult<>(null, null, false));
@@ -65,7 +65,7 @@ public class FacebookLoginBroker {
 
 				@Override
 				public void onError(FacebookException error) {
-					enableLoginButton();
+					reset();
 					if (onError != null)
 						onError.consume(error);
 					consumer.process(new BrokerResult<>(null, error, false));
@@ -76,6 +76,10 @@ public class FacebookLoginBroker {
 		};
 	}
 
+	public void reset() {
+		logOut();
+		enableLoginButton();
+	}
 
 	public void start() {
 		startWithResult().consume(brokerResult -> {});

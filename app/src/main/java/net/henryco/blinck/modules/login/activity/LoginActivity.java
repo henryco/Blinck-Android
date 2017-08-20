@@ -63,8 +63,7 @@ public class LoginActivity extends AppCompatActivity {
 			loginAction(accessToken);
 		}
 		else {
-			facebookLoginBroker.logOut();
-			facebookLoginBroker.enableLoginButton();
+			facebookLoginBroker.reset();
 		}
 
 	}
