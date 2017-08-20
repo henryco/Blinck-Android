@@ -15,7 +15,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class, manifest = "app/src/main/AndroidManifest.xml")
-
 public class RetroTemplateTest {
 
 
