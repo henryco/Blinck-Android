@@ -35,11 +35,6 @@ dependencies {
     })
 
 
-
-
-
-
-
     compile 'com.facebook.android:facebook-android-sdk:4.22.0'
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
