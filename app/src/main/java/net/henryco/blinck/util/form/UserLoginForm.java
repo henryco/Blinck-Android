@@ -1,4 +1,4 @@
-package net.henryco.blinck.modules.login.form;
+package net.henryco.blinck.util.form;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;

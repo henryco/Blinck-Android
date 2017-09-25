@@ -1,5 +1,6 @@
 package net.henryco.blinck.modules.login.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,12 +9,14 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.login.LoginManager;
 import com.facebook.login.widget.LoginButton;
+import lombok.val;
 import net.henryco.blinck.R;
 import net.henryco.blinck.modules.BlinckApplication;
 import net.henryco.blinck.modules.BlinckServerAPI;
 import net.henryco.blinck.modules.login.broker.FacebookLoginBroker;
-import net.henryco.blinck.modules.login.form.UserLoginForm;
+import net.henryco.blinck.util.form.UserLoginForm;
 import net.henryco.blinck.modules.login.service.BlinckLoginService;
+import net.henryco.blinck.util.form.UserStatusForm;
 import net.henryco.blinck.util.function.BlinckBiConsumer;
 import net.henryco.blinck.util.reflect.AutoFind;
 import net.henryco.blinck.util.reflect.AutoFinder;
@@ -24,8 +27,9 @@ import retrofit2.Response;
 import javax.inject.Inject;
 import java.util.List;
 
-public class LoginActivity extends AppCompatActivity {
+import static android.content.Context.MODE_PRIVATE;
 
+public class LoginActivity extends AppCompatActivity {
 
 	private FacebookLoginBroker facebookLoginBroker;
 
@@ -36,25 +40,94 @@ public class LoginActivity extends AppCompatActivity {
 	private LoginButton loginButton;
 
 
-
 	private final BlinckBiConsumer<Call<List<String>>, Response<List<String>>>
 			onResponse = (listCall, listResponse) -> {
 		List<String> list = listResponse.body();
-		onGetPermissionsSuccess(list == null
-				? permissionsAlert()
+		onGetPermissionsSuccess_1(list == null
+				? Helper.permissionsAlert()
 				: list.toArray(new String[0])
 		);
 	};
 
 
-	private final BlinckBiConsumer<Call<List<String>>, Throwable>
-			onFailure = (listCall, throwable) -> {
-		throwable.printStackTrace();
-		// TODO: 25/09/17
-	};
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+
+		super.onCreate(savedInstanceState);
+		this.setContentView(R.layout.activity_login);
+		((BlinckApplication) getApplication()).getLoginComponent().inject(this);
+		AutoFinder.find(this);
+
+		loginService.getRequiredFacebookPermissionsList()
+				.enqueue(new RetroCallback<>(onResponse));
+	}
 
 
-	private static String[] permissionsAlert() {
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		facebookLoginBroker.onActivityResult(requestCode, resultCode, data);
+	}
+
+
+	private void onGetPermissionsSuccess_1(String ... permissions) {
+
+		LoginManager.getInstance().logOut(); // TODO: 20/08/17 REMOVE IT
+		final AccessToken accessToken = AccessToken.getCurrentAccessToken();
+
+		loginButton.setReadPermissions(permissions);
+
+		facebookLoginBroker = new FacebookLoginBroker(loginButton, CallbackManager.Factory.create());
+		facebookLoginBroker.onSuccess(loginResult -> onFacebookAuthSuccess_2(loginResult.getAccessToken()));
+		facebookLoginBroker.activate();
+
+		if (accessToken != null && !accessToken.isExpired()) {
+			facebookLoginBroker.disableLoginButton();
+			onFacebookAuthSuccess_2(accessToken);
+		}
+		else facebookLoginBroker.reset();
+	}
+
+
+
+
+	private void onFacebookAuthSuccess_2(AccessToken accessToken) {
+
+		UserLoginForm form = new UserLoginForm(accessToken.getUserId(), accessToken.getToken());
+		loginService.postLoginForm(form)
+				.enqueue(new RetroCallback<>((call, response) ->
+						onAppAuthSuccess_3(response.headers().get(BlinckServerAPI.HttpHeaders.AUTHORIZATION))
+				)
+		);
+	}
+
+
+
+	private void onAppAuthSuccess_3(String app_token) {
+
+		loginService.getUserStatus(app_token).enqueue(new RetroCallback<>((call, response) -> {
+
+			UserStatusForm status = response.body();
+			if (status != null && status.getActive())
+				onGetStatusSuccess_4(status.getPrincipal(), app_token);
+		}));
+	}
+
+
+
+	private void onGetStatusSuccess_4(String userId, String app_token) {
+		Helper.saveAppAuthorization(this, userId, app_token);
+
+	}
+
+
+}
+
+
+
+final class Helper {
+
+	static String[] permissionsAlert() {
 		return new String[] {
 				"user_birthday",
 				"user_location",
@@ -68,58 +141,13 @@ public class LoginActivity extends AppCompatActivity {
 		};
 	}
 
+	static void saveAppAuthorization(Context context, String uid, String token) {
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+		val PREF_KEY = context.getString(R.string.preference_file_key);
+		val editor = context.getSharedPreferences(PREF_KEY, MODE_PRIVATE).edit();
 
-		super.onCreate(savedInstanceState);
-		this.setContentView(R.layout.activity_login);
-		((BlinckApplication) getApplication()).getLoginComponent().inject(this);
-		AutoFinder.find(this);
-
-		loginService.getRequiredFacebookPermissionsList()
-				.enqueue(new RetroCallback<>(onResponse, onFailure));
+		editor.putString(context.getString(R.string.preference_app_token), token);
+		editor.putString(context.getString(R.string.preference_app_uid), uid);
+		editor.apply();
 	}
-
-
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		facebookLoginBroker.onActivityResult(requestCode, resultCode, data);
-	}
-
-
-	private void onGetPermissionsSuccess(String ... permissions) {
-
-		LoginManager.getInstance().logOut(); // TODO: 20/08/17 REMOVE IT
-		final AccessToken accessToken = AccessToken.getCurrentAccessToken();
-
-		loginButton.setReadPermissions(permissions);
-
-		facebookLoginBroker = new FacebookLoginBroker(loginButton, CallbackManager.Factory.create());
-		facebookLoginBroker.onSuccess(loginResult -> loginAction(loginResult.getAccessToken()));
-		facebookLoginBroker.activate();
-
-		if (accessToken != null && !accessToken.isExpired()) {
-			facebookLoginBroker.disableLoginButton();
-			loginAction(accessToken);
-		}
-		else facebookLoginBroker.reset();
-	}
-
-
-	private void loginAction(AccessToken accessToken) {
-
-		System.out.println("USER ID: "+accessToken.getUserId());
-
-		UserLoginForm form = new UserLoginForm(accessToken.getUserId(), accessToken.getToken());
-		loginService.postLoginForm(form).enqueue(new RetroCallback<>((call, response) -> {
-			String token = response.headers().get(BlinckServerAPI.Headers.AUTHORIZATION);
-			System.out.println("TOKEN: "+token);
-		}));
-	}
-
-
-
 }

@@ -6,7 +6,7 @@ package net.henryco.blinck.modules;
 
 public interface BlinckServerAPI {
 
-	interface Headers {
+	interface HttpHeaders {
 		String AUTHORIZATION = "Authorization";
 	}
 

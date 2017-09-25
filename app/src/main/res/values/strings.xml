@@ -12,7 +12,12 @@
 	<string name="error_field_required">This field is required</string>
 	<string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
 	
+	
 	<string name="facebook_app_id">295760524182920</string>
 	<string name="fb_login_protocol_scheme">fb295760524182920</string>
 
+	
+	<string name="preference_file_key">net.henryco.blinck.PREFERENCES</string>
+	<string name="preference_app_token">blinck_access_token</string>
+	<string name="preference_app_uid">blinck_access_uid</string>
 </resources>
