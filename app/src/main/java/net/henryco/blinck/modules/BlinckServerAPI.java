@@ -10,6 +10,6 @@ public interface BlinckServerAPI {
 		String AUTHORIZATION = "Authorization";
 	}
 
-	String SERVER_URL = "http://192.168.0.178:8080";
+	String SERVER_URL = "http://37.139.19.53:8080";
 
 }

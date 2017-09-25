@@ -1,10 +1,13 @@
 package net.henryco.blinck.modules.app;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import dagger.Module;
 import dagger.Provides;
+import lombok.val;
+import net.henryco.blinck.R;
 
 import javax.inject.Singleton;
 
@@ -29,7 +32,9 @@ public class AppModule {
 
 	@Provides @Singleton
 	public SharedPreferences providesSharedPreferences(Application application) {
-		return PreferenceManager.getDefaultSharedPreferences(application);
+
+		val PREF_KEY = application.getString(R.string.preference_file_key);
+		return application.getSharedPreferences(PREF_KEY, Context.MODE_PRIVATE);
 	}
 
 }

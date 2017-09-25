@@ -15,9 +15,12 @@
 	
 	<string name="facebook_app_id">295760524182920</string>
 	<string name="fb_login_protocol_scheme">fb295760524182920</string>
-
+	
 	
 	<string name="preference_file_key">net.henryco.blinck.PREFERENCES</string>
 	<string name="preference_app_token">blinck_access_token</string>
 	<string name="preference_app_uid">blinck_access_uid</string>
+	<string name="title_activity_main_page">MainPageActivity</string>
+	<string name="action_settings">Settings</string>
+	<string name="section_format">Hello World from section: %1$d</string>
 </resources>

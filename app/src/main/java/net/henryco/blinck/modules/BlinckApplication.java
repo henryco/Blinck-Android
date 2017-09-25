@@ -6,6 +6,8 @@ import net.henryco.blinck.modules.app.AppModule;
 import net.henryco.blinck.modules.login.DaggerLoginComponent;
 import net.henryco.blinck.modules.login.LoginComponent;
 import net.henryco.blinck.modules.login.LoginModule;
+import net.henryco.blinck.modules.main.DaggerMainComponent;
+import net.henryco.blinck.modules.main.MainComponent;
 
 
 public class BlinckApplication extends Application {
@@ -13,6 +15,7 @@ public class BlinckApplication extends Application {
 
 	private AppModule appModule;
 	private LoginComponent loginComponent;
+	private MainComponent mainComponent;
 
 
 	@Override
@@ -28,6 +31,7 @@ public class BlinckApplication extends Application {
 	private void initializeDagger2() {
 		createAppModule();
 		createLoginComponent();
+		createMainComponent();
 	}
 
 	private void createAppModule() {
@@ -41,6 +45,11 @@ public class BlinckApplication extends Application {
 		.build();
 	}
 
+	private void createMainComponent() {
+		this.mainComponent = DaggerMainComponent.builder()
+				.appModule(appModule)
+		.build();
+	}
 
 
 
@@ -51,4 +60,7 @@ public class BlinckApplication extends Application {
 		return this.loginComponent;
 	}
 
+	public MainComponent getMainComponent() {
+		return this.mainComponent;
+	}
 }

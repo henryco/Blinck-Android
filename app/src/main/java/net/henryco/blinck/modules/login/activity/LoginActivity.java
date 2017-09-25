@@ -1,6 +1,5 @@
 package net.henryco.blinck.modules.login.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,13 +8,13 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.login.LoginManager;
 import com.facebook.login.widget.LoginButton;
-import lombok.val;
 import net.henryco.blinck.R;
 import net.henryco.blinck.modules.BlinckApplication;
 import net.henryco.blinck.modules.BlinckServerAPI;
 import net.henryco.blinck.modules.login.broker.FacebookLoginBroker;
-import net.henryco.blinck.util.form.login.UserLoginForm;
 import net.henryco.blinck.modules.login.service.BlinckLoginService;
+import net.henryco.blinck.modules.main.activity.MainPageActivity;
+import net.henryco.blinck.util.form.login.UserLoginForm;
 import net.henryco.blinck.util.form.login.UserStatusForm;
 import net.henryco.blinck.util.function.BlinckBiConsumer;
 import net.henryco.blinck.util.reflect.AutoFind;
@@ -26,8 +25,6 @@ import retrofit2.Response;
 
 import javax.inject.Inject;
 import java.util.List;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -42,9 +39,20 @@ public class LoginActivity extends AppCompatActivity {
 
 	private final BlinckBiConsumer<Call<List<String>>, Response<List<String>>>
 			onResponse = (listCall, listResponse) -> {
+
 		List<String> list = listResponse.body();
 		onGetPermissionsSuccess_1(list == null
-				? Helper.permissionsAlert()
+				? new String[] {
+					"user_birthday",
+					"user_location",
+					"user_likes",
+					"user_education_history",
+					"user_photos",
+					"user_friends",
+					"user_about_me",
+					"read_custom_friendlists",
+					"public_profile"
+				}
 				: list.toArray(new String[0])
 		);
 	};
@@ -118,38 +126,15 @@ public class LoginActivity extends AppCompatActivity {
 
 
 	private void onGetStatusSuccess_4(String userId, String app_token) {
-		Helper.saveAppAuthorization(this, userId, app_token);
 
-	}
-
-
-}
-
-
-
-final class Helper {
-
-	static String[] permissionsAlert() {
-		return new String[] {
-				"user_birthday",
-				"user_location",
-				"user_likes",
-				"user_education_history",
-				"user_photos",
-				"user_friends",
-				"user_about_me",
-				"read_custom_friendlists",
-				"public_profile"
-		};
-	}
-
-	static void saveAppAuthorization(Context context, String uid, String token) {
-
-		val PREF_KEY = context.getString(R.string.preference_file_key);
-		val editor = context.getSharedPreferences(PREF_KEY, MODE_PRIVATE).edit();
-
-		editor.putString(context.getString(R.string.preference_app_token), token);
-		editor.putString(context.getString(R.string.preference_app_uid), uid);
+		SharedPreferences.Editor editor = sharedPreferences.edit();
+		editor.putString(getString(R.string.preference_app_token), app_token);
+		editor.putString(getString(R.string.preference_app_uid), userId);
 		editor.apply();
+
+		startActivity(new Intent(this, MainPageActivity.class));
+		finish();
 	}
+
+
 }

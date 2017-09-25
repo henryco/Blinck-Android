@@ -1,8 +1,11 @@
 package net.henryco.blinck.util.retro;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by HenryCo on 19/08/17.
@@ -14,13 +17,18 @@ public final class RetroTemplate {
 
 	private Converter.Factory converterFactory = null;
 	private String baseURL = null;
+	private OkHttpClient client = null;
 
 
 	private Retrofit createRetrofit(Class<?> retroServiceClass) {
-		return new Retrofit.Builder()
-				.baseUrl(processAnnotationURL(retroServiceClass, baseURL))
-				.addConverterFactory(converterFactory == null ? GsonConverterFactory.create() : converterFactory)
-		.build();
+
+		Retrofit.Builder builder = new Retrofit.Builder();
+		builder.baseUrl(processAnnotationURL(retroServiceClass, baseURL));
+		builder.addConverterFactory(converterFactory == null ? GsonConverterFactory.create() : converterFactory);
+
+		if (client != null) builder.client(client);
+
+		return builder.build();
 	}
 
 	private String processAnnotationURL(Class<?> retroServiceClass, String baseURL) {
@@ -53,6 +61,11 @@ public final class RetroTemplate {
 
 	public RetroTemplate setBaseURL(String baseURL) {
 		this.baseURL = baseURL;
+		return this;
+	}
+
+	public RetroTemplate setHttpClient(OkHttpClient client) {
+		this.client = client;
 		return this;
 	}
 }
