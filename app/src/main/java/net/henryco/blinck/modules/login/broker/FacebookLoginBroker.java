@@ -22,7 +22,6 @@ public class FacebookLoginBroker {
 
 	private LoginResult loginResult;
 
-
 	private BlinckConsumer<FacebookException> onError;
 	private BlinckConsumer<LoginResult> onSuccess;
 	private Runnable onCancel;
@@ -39,7 +38,7 @@ public class FacebookLoginBroker {
 	}
 
 
-	public BlinckConsumer<BrokerResultHandler<LoginResult, FacebookException>> startWithResult() {
+	public BlinckConsumer<BrokerResultHandler<LoginResult, FacebookException>> activateWithResult() {
 
 		return consumer -> {
 
@@ -81,8 +80,8 @@ public class FacebookLoginBroker {
 		enableLoginButton();
 	}
 
-	public void start() {
-		startWithResult().consume(brokerResult -> {});
+	public void activate() {
+		activateWithResult().consume(brokerResult -> {});
 	}
 
 

@@ -12,6 +12,12 @@ import net.henryco.blinck.R;
 import net.henryco.blinck.modules.BlinckApplication;
 import net.henryco.blinck.modules.login.broker.FacebookLoginBroker;
 import net.henryco.blinck.modules.login.service.BlinckLoginService;
+import net.henryco.blinck.util.function.BlinckBiConsumer;
+import net.henryco.blinck.util.reflect.AutoFind;
+import net.henryco.blinck.util.reflect.AutoFinder;
+import net.henryco.blinck.util.retro.RetroCallback;
+import retrofit2.Call;
+import retrofit2.Response;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -19,25 +25,46 @@ import java.util.List;
 public class LoginActivity extends AppCompatActivity {
 
 
+	private FacebookLoginBroker facebookLoginBroker;
+
 	@Inject SharedPreferences sharedPreferences;
 	@Inject BlinckLoginService loginService;
 
-	private FacebookLoginBroker facebookLoginBroker;
+	@AutoFind(R.id.fb_login_button)
+	private LoginButton loginButton;
 
 
-	private static final String[] DEFAULT_PERMISSIONS = {
-			"user_birthday",
-			"user_location",
-			"user_likes",
-			"user_education_history",
-			"user_photos",
-			"user_friends",
-			"user_about_me",
-			"read_custom_friendlists",
-			"public_profile"
+
+	private final BlinckBiConsumer<Call<List<String>>, Response<List<String>>>
+			onResponse = (listCall, listResponse) -> {
+		List<String> list = listResponse.body();
+		onGetPermissionsSuccess(list == null
+				? permissionsAlert()
+				: list.toArray(new String[0])
+		);
 	};
 
 
+	private final BlinckBiConsumer<Call<List<String>>, Throwable>
+			onFailure = (listCall, throwable) -> {
+		throwable.printStackTrace();
+		// TODO: 25/09/17
+	};
+
+
+	private static String[] permissionsAlert() {
+		return new String[] {
+				"user_birthday",
+				"user_location",
+				"user_likes",
+				"user_education_history",
+				"user_photos",
+				"user_friends",
+				"user_about_me",
+				"read_custom_friendlists",
+				"public_profile"
+		};
+	}
 
 
 	@Override
@@ -46,27 +73,12 @@ public class LoginActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.activity_login);
 		((BlinckApplication) getApplication()).getLoginComponent().inject(this);
+		AutoFinder.find(this);
 
-		LoginManager.getInstance().logOut(); // TODO: 20/08/17 REMOVE IT
-		final AccessToken accessToken = AccessToken.getCurrentAccessToken();
-		final LoginButton loginButton = (LoginButton) findViewById(R.id.fb_login_button);
-
-		loginButton.setReadPermissions(getPermissions());
-
-		facebookLoginBroker = new FacebookLoginBroker(loginButton, CallbackManager.Factory.create());
-		facebookLoginBroker.onSuccess(loginResult -> loginAction(loginResult.getAccessToken()));
-		facebookLoginBroker.start();
-
-
-		if (accessToken != null && !accessToken.isExpired()) {
-			facebookLoginBroker.disableLoginButton();
-			loginAction(accessToken);
-		}
-		else {
-			facebookLoginBroker.reset();
-		}
-
+		loginService.getRequiredFacebookPermissionsList()
+				.enqueue(new RetroCallback<>(onResponse, onFailure));
 	}
+
 
 
 	@Override
@@ -76,23 +88,30 @@ public class LoginActivity extends AppCompatActivity {
 	}
 
 
+	private void onGetPermissionsSuccess(String ... permissions) {
 
+		LoginManager.getInstance().logOut(); // TODO: 20/08/17 REMOVE IT
+		final AccessToken accessToken = AccessToken.getCurrentAccessToken();
 
-	private String[] getPermissions() {
-		try {
-			List<String> body = loginService.getRequiredFacebookPermissionsList().execute().body();
-			return body != null ? body.toArray(new String[0]) : DEFAULT_PERMISSIONS;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return DEFAULT_PERMISSIONS;
+		loginButton.setReadPermissions(permissions);
+
+		facebookLoginBroker = new FacebookLoginBroker(loginButton, CallbackManager.Factory.create());
+		facebookLoginBroker.onSuccess(loginResult -> loginAction(loginResult.getAccessToken()));
+		facebookLoginBroker.activate();
+
+		if (accessToken != null && !accessToken.isExpired()) {
+			facebookLoginBroker.disableLoginButton();
+			loginAction(accessToken);
 		}
+		else facebookLoginBroker.reset();
 	}
-
 
 
 	private void loginAction(AccessToken accessToken) {
 		System.out.println("USER ID: "+accessToken.getUserId());
+
 	}
+
 
 
 }

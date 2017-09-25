@@ -1,22 +1,18 @@
 package net.henryco.blinck.modules;
 
 import android.app.Application;
-import com.facebook.FacebookActivity;
 import com.facebook.appevents.AppEventsLogger;
 import net.henryco.blinck.modules.app.AppModule;
 import net.henryco.blinck.modules.login.DaggerLoginComponent;
 import net.henryco.blinck.modules.login.LoginComponent;
 import net.henryco.blinck.modules.login.LoginModule;
 
-/**
- * Created by HenryCo on 20/08/17.
- */
 
 public class BlinckApplication extends Application {
 
+
 	private AppModule appModule;
 	private LoginComponent loginComponent;
-
 
 
 	@Override

@@ -7,14 +7,13 @@ import android.support.annotation.Nullable;
  * Created by HenryCo on 20/08/17.
  */
 
-public final class BrokerResult<RESULT, EXCEPTION extends Exception> {
+final class BrokerResult<RESULT, EXCEPTION extends Exception> {
 
-	RESULT result = null;
-	EXCEPTION exception = null;
-	boolean success = false;
+	private RESULT result = null;
+	private EXCEPTION exception = null;
+	private boolean success = false;
 
-	public BrokerResult() {}
-	public BrokerResult(RESULT result, EXCEPTION exception, boolean success) {
+	BrokerResult(RESULT result, EXCEPTION exception, boolean success) {
 		this.result = result;
 		this.exception = exception;
 		this.success = success;
@@ -34,15 +33,4 @@ public final class BrokerResult<RESULT, EXCEPTION extends Exception> {
 	}
 
 
-	public void setResult(RESULT result) {
-		this.result = result;
-	}
-
-	public void setException(EXCEPTION exception) {
-		this.exception = exception;
-	}
-
-	public void setSuccess(boolean success) {
-		this.success = success;
-	}
 }
