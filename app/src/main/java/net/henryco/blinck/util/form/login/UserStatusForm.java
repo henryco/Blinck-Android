@@ -1,4 +1,4 @@
-package net.henryco.blinck.util.form;
+package net.henryco.blinck.util.form.login;
 
 import com.google.gson.annotations.Expose;
 import lombok.Data;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
  */
 
 @Data @NoArgsConstructor
-public class UserStatusForm {
+public final class UserStatusForm {
 
 	private @Expose String principal;
 	private @Expose Boolean active;

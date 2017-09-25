@@ -2,8 +2,8 @@ package net.henryco.blinck.modules.login.service;
 
 
 import net.henryco.blinck.modules.BlinckServerAPI;
-import net.henryco.blinck.util.form.UserLoginForm;
-import net.henryco.blinck.util.form.UserStatusForm;
+import net.henryco.blinck.util.form.login.UserLoginForm;
+import net.henryco.blinck.util.form.login.UserStatusForm;
 import net.henryco.blinck.util.retro.RetroURL;
 import retrofit2.Call;
 import retrofit2.http.Body;

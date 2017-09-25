@@ -14,9 +14,9 @@ import net.henryco.blinck.R;
 import net.henryco.blinck.modules.BlinckApplication;
 import net.henryco.blinck.modules.BlinckServerAPI;
 import net.henryco.blinck.modules.login.broker.FacebookLoginBroker;
-import net.henryco.blinck.util.form.UserLoginForm;
+import net.henryco.blinck.util.form.login.UserLoginForm;
 import net.henryco.blinck.modules.login.service.BlinckLoginService;
-import net.henryco.blinck.util.form.UserStatusForm;
+import net.henryco.blinck.util.form.login.UserStatusForm;
 import net.henryco.blinck.util.function.BlinckBiConsumer;
 import net.henryco.blinck.util.reflect.AutoFind;
 import net.henryco.blinck.util.reflect.AutoFinder;
@@ -68,6 +68,8 @@ public class LoginActivity extends AppCompatActivity {
 		super.onActivityResult(requestCode, resultCode, data);
 		facebookLoginBroker.onActivityResult(requestCode, resultCode, data);
 	}
+
+
 
 
 	private void onGetPermissionsSuccess_1(String ... permissions) {
