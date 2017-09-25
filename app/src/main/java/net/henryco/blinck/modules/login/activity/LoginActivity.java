@@ -10,7 +10,9 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.widget.LoginButton;
 import net.henryco.blinck.R;
 import net.henryco.blinck.modules.BlinckApplication;
+import net.henryco.blinck.modules.BlinckServerAPI;
 import net.henryco.blinck.modules.login.broker.FacebookLoginBroker;
+import net.henryco.blinck.modules.login.form.UserLoginForm;
 import net.henryco.blinck.modules.login.service.BlinckLoginService;
 import net.henryco.blinck.util.function.BlinckBiConsumer;
 import net.henryco.blinck.util.reflect.AutoFind;
@@ -108,8 +110,14 @@ public class LoginActivity extends AppCompatActivity {
 
 
 	private void loginAction(AccessToken accessToken) {
+
 		System.out.println("USER ID: "+accessToken.getUserId());
 
+		UserLoginForm form = new UserLoginForm(accessToken.getUserId(), accessToken.getToken());
+		loginService.postLoginForm(form).enqueue(new RetroCallback<>((call, response) -> {
+			String token = response.headers().get(BlinckServerAPI.Headers.AUTHORIZATION);
+			System.out.println("TOKEN: "+token);
+		}));
 	}
 
 

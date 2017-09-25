@@ -2,9 +2,12 @@ package net.henryco.blinck.modules.login.service;
 
 
 import net.henryco.blinck.modules.BlinckServerAPI;
+import net.henryco.blinck.modules.login.form.UserLoginForm;
 import net.henryco.blinck.util.retro.RetroURL;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 
 import java.util.List;
 
@@ -20,5 +23,8 @@ public interface BlinckLoginService {
 
 	@GET("/public/facebook/permissions")
 	Call<List<String>> getRequiredFacebookPermissionsList();
+
+	@POST("/login/user")
+	Call<Void> postLoginForm(@Body UserLoginForm loginForm);
 
 }

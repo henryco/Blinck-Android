@@ -23,11 +23,11 @@ public class RetroCallback<T> implements Callback<T> {
 	}
 
 	public RetroCallback(BlinckBiConsumer<Call<T>, Response<T>> onResponseConsumer) {
-		this(onResponseConsumer, null);
+		this(onResponseConsumer, (tCall, throwable) -> throwable.printStackTrace());
 	}
 
 	public RetroCallback() {
-		this(null, null);
+		this(null);
 	}
 
 

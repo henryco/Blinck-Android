@@ -6,6 +6,10 @@ package net.henryco.blinck.modules;
 
 public interface BlinckServerAPI {
 
+	interface Headers {
+		String AUTHORIZATION = "Authorization";
+	}
+
 	String SERVER_URL = "http://192.168.0.178:8080";
 
 }
