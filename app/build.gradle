@@ -35,8 +35,9 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-    compile 'com.infideap.drawerbehavior:drawer-behavior:0.0.1'
 
+
+    compile 'com.infideap.drawerbehavior:drawer-behavior:0.0.1'
     compile 'com.facebook.android:facebook-android-sdk:4.22.0'
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
@@ -51,9 +52,8 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
     testCompile 'org.robolectric:robolectric:3.3.2'
-
     annotationProcessor 'com.google.dagger:dagger-compiler:2.9'
-    annotationProcessor "org.projectlombok:lombok:1.16.8"
+    annotationProcessor 'org.projectlombok:lombok:1.16.8'
     provided 'javax.annotation:jsr250-api:1.0'
     provided 'org.projectlombok:lombok:1.16.8'
 }

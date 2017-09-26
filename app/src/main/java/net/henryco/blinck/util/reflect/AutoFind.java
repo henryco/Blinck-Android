@@ -12,4 +12,6 @@ import java.lang.annotation.*;
 public @interface AutoFind {
 
 	int value();
+
+	final class Finder extends AutoFinder {/* Class that delegates static method */}
 }
