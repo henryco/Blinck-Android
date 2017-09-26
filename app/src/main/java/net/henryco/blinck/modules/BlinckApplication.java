@@ -35,7 +35,7 @@ public class BlinckApplication extends Application {
 	}
 
 	private void createAppModule() {
-		this.appModule =  new AppModule(this);
+		this.appModule = new AppModule(this);
 	}
 
 	private void createLoginComponent() {
