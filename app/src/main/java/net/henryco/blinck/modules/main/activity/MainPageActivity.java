@@ -1,5 +1,6 @@
 package net.henryco.blinck.modules.main.activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -11,9 +12,11 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import com.facebook.login.LoginManager;
 import com.infideap.drawerbehavior.AdvanceDrawerLayout;
 import net.henryco.blinck.R;
 import net.henryco.blinck.modules.BlinckApplication;
+import net.henryco.blinck.modules.login.activity.LoginActivity;
 import net.henryco.blinck.util.reflect.AutoFind;
 import net.henryco.blinck.util.reflect.AutoFinder;
 
@@ -115,6 +118,10 @@ public class MainPageActivity extends AppCompatActivity
 			// Handle the camera action
 		} else if (id == R.id.nav_settings) {
 
+		} else if (id == R.id.nav_logout) {
+			LoginManager.getInstance().logOut(); // TODO: 20/08/17 REMOVE IT
+			startActivity(new Intent(this, LoginActivity.class));
+			finish();
 		}
 
 		AdvanceDrawerLayout drawer = (AdvanceDrawerLayout) findViewById(R.id.drawer_layout);

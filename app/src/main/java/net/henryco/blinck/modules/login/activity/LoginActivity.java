@@ -82,7 +82,6 @@ public class LoginActivity extends AppCompatActivity {
 
 	private void onGetPermissionsSuccess_1(String ... permissions) {
 
-		LoginManager.getInstance().logOut(); // TODO: 20/08/17 REMOVE IT
 		final AccessToken accessToken = AccessToken.getCurrentAccessToken();
 
 		loginButton.setReadPermissions(permissions);
