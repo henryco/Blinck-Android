@@ -149,12 +149,19 @@ public class MainPageActivity extends AppCompatActivity
 	public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
 		switch (item.getItemId()) {
+
 			case R.id.nav_profile:
 
 				break;
+
+			case R.id.nav_notifications:
+
+				break;
+
 			case R.id.nav_settings:
 
 				break;
+
 			case R.id.nav_logout:
 
 				LoginManager.getInstance().logOut();
