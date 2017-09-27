@@ -6,6 +6,7 @@ import net.henryco.blinck.util.retro.RetroURL;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Query;
 
 /**
  * Created by HenryCo on 27/09/17.
@@ -14,6 +15,10 @@ import retrofit2.http.Header;
 @RetroURL(BlinckServerAPI.SERVER_URL)
 public interface BlinckProfileInfoService {
 
-	@GET("/protected/user/profile")
-	Call<UserProfileForm> getUserProfile(@Header(BlinckServerAPI.HttpHeaders.AUTHORIZATION) String authorization);
+	@GET("/protected/user/profile/bio")
+	Call<UserProfileForm> getUserProfile(
+			@Header(BlinckServerAPI.HttpHeaders.AUTHORIZATION) String authorization,
+	        @Query("id") Long userId
+	);
+
 }

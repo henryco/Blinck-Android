@@ -82,6 +82,7 @@ public class LoginActivity extends AppCompatActivity {
 	}
 
 
+
 	private void tryToConnect() {
 
 		if (connection_attempt_numb++ < CONNECTION_ATTEMPTS_MAX_NUMB) {
@@ -92,8 +93,6 @@ public class LoginActivity extends AppCompatActivity {
 			tryToEnterToMainPage();
 		}
 	}
-
-
 
 
 

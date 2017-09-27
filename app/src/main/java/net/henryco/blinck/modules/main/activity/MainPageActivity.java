@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.TextView;
 import com.facebook.login.LoginManager;
 import com.infideap.drawerbehavior.AdvanceDrawerLayout;
+import lombok.val;
 import net.henryco.blinck.R;
 import net.henryco.blinck.modules.BlinckApplication;
 import net.henryco.blinck.modules.login.activity.LoginActivity;
@@ -107,8 +108,18 @@ public class MainPageActivity extends AppCompatActivity
 		TextView name = (TextView) navigationView.getHeaderView(0).findViewById(R.id.profile_text);
 		TextView work = (TextView) navigationView.getHeaderView(0).findViewById(R.id.under_text);
 
-		name.setText("SOMENAME");
-		work.setText("SOMEWORK");
+		val uid = sharedPreferences.getString(getString(R.string.preference_app_uid), null);
+		val token = sharedPreferences.getString(getString(R.string.preference_app_token), null);
+
+		infoMainService.loadProfileFromServer(Long.decode(uid), token, profileForm -> {
+			System.out.println("FORM: "+profileForm);
+			runOnUiThread(() -> {
+				name.setText(profileForm.getUserName().getFirstName());
+				work.setText(profileForm.getBirthday().toString());
+			});
+		});
+
+
 	}
 
 
@@ -156,7 +167,7 @@ public class MainPageActivity extends AppCompatActivity
 				break;
 			case R.id.nav_logout:
 
-				LoginManager.getInstance().logOut(); // TODO: 20/08/17 REMOVE IT
+				LoginManager.getInstance().logOut();
 				startActivity(new Intent(this, LoginActivity.class));
 				finish();
 				break;
