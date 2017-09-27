@@ -8,12 +8,10 @@ import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 import com.facebook.login.LoginManager;
 import com.infideap.drawerbehavior.AdvanceDrawerLayout;
@@ -22,6 +20,7 @@ import net.henryco.blinck.R;
 import net.henryco.blinck.modules.BlinckApplication;
 import net.henryco.blinck.modules.login.activity.LoginActivity;
 import net.henryco.blinck.modules.main.service.InfoMainService;
+import net.henryco.blinck.util.Authorization;
 import net.henryco.blinck.util.reflect.AutoFind;
 import net.henryco.blinck.util.reflect.AutoFinder;
 
@@ -106,20 +105,11 @@ public class MainPageActivity extends AppCompatActivity
 		navigationView.setNavigationItemSelectedListener(this);
 
 		TextView name = (TextView) navigationView.getHeaderView(0).findViewById(R.id.profile_text);
-		TextView work = (TextView) navigationView.getHeaderView(0).findViewById(R.id.under_text);
 
-		val uid = sharedPreferences.getString(getString(R.string.preference_app_uid), null);
-		val token = sharedPreferences.getString(getString(R.string.preference_app_token), null);
+		Authorization authorization = new Authorization(this);
 
-		infoMainService.loadAndCacheProfileFromServer(Long.decode(uid), token, profileForm -> {
-			System.out.println("FORM: "+profileForm);
-			runOnUiThread(() -> {
-				name.setText(profileForm.getUserName().getFirstName());
-				work.setText(profileForm.getBirthday().toString());
-			});
-		});
-
-
+		infoMainService.loadAndCacheProfileFromServer(authorization.getUid(), authorization.getToken(), profileForm
+				-> runOnUiThread(() -> name.setText(profileForm.getUserName().getFirstName())));
 	}
 
 
