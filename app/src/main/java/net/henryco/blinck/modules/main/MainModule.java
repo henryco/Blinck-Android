@@ -3,7 +3,7 @@ package net.henryco.blinck.modules.main;
 import android.app.Application;
 import dagger.Module;
 import dagger.Provides;
-import net.henryco.blinck.modules.app.userprofile.UserProfileFormRepository;
+import net.henryco.blinck.modules.main.service.UserProfileFormRepository;
 import net.henryco.blinck.modules.main.service.BlinckProfileInfoService;
 import net.henryco.blinck.modules.main.service.InfoMainService;
 import net.henryco.blinck.util.retro.RetroTemplate;

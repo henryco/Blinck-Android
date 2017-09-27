@@ -4,10 +4,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
-import com.facebook.login.LoginManager;
 import com.facebook.login.widget.LoginButton;
+import lombok.val;
 import net.henryco.blinck.R;
 import net.henryco.blinck.modules.BlinckApplication;
 import net.henryco.blinck.modules.BlinckServerAPI;
@@ -27,6 +28,9 @@ import javax.inject.Inject;
 import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
+
+	private static final int CONNECTION_ATTEMPTS_MAX_NUMB = 5;
+	private volatile int connection_attempt_numb;
 
 	private FacebookLoginBroker facebookLoginBroker;
 
@@ -66,8 +70,8 @@ public class LoginActivity extends AppCompatActivity {
 		((BlinckApplication) getApplication()).getLoginComponent().inject(this);
 		AutoFinder.find(this);
 
-		loginService.getRequiredFacebookPermissionsList()
-				.enqueue(new RetroCallback<>(onResponse));
+		this.connection_attempt_numb = 0;
+		tryToConnect();
 	}
 
 
@@ -78,12 +82,24 @@ public class LoginActivity extends AppCompatActivity {
 	}
 
 
+	private void tryToConnect() {
+
+		if (connection_attempt_numb++ < CONNECTION_ATTEMPTS_MAX_NUMB) {
+			loginService.getRequiredFacebookPermissionsList()
+					.enqueue(new RetroCallback<>(onResponse));
+		} else {
+			Toast.makeText(this, "Looks like there is connection troubles", Toast.LENGTH_LONG).show();
+			tryToEnterToMainPage();
+		}
+	}
+
+
+
 
 
 	private void onGetPermissionsSuccess_1(String ... permissions) {
 
 		final AccessToken accessToken = AccessToken.getCurrentAccessToken();
-
 		loginButton.setReadPermissions(permissions);
 
 		facebookLoginBroker = new FacebookLoginBroker(loginButton, CallbackManager.Factory.create());
@@ -99,14 +115,13 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-
 	private void onFacebookAuthSuccess_2(AccessToken accessToken) {
 
 		UserLoginForm form = new UserLoginForm(accessToken.getUserId(), accessToken.getToken());
 		loginService.postLoginForm(form)
 				.enqueue(new RetroCallback<>((call, response) ->
 						onAppAuthSuccess_3(response.headers().get(BlinckServerAPI.HttpHeaders.AUTHORIZATION))
-				)
+				, (voidCall, throwable) -> tryToConnect())
 		);
 	}
 
@@ -119,7 +134,11 @@ public class LoginActivity extends AppCompatActivity {
 			UserStatusForm status = response.body();
 			if (status != null && status.getActive())
 				onGetStatusSuccess_4(status.getPrincipal(), app_token);
-		}));
+			else {
+				facebookLoginBroker.reset();
+				tryToConnect();
+			}
+		},(userStatusFormCall, throwable) -> tryToConnect()));
 	}
 
 
@@ -131,8 +150,18 @@ public class LoginActivity extends AppCompatActivity {
 		editor.putString(getString(R.string.preference_app_uid), userId);
 		editor.apply();
 
-		startActivity(new Intent(this, MainPageActivity.class));
-		finish();
+		tryToEnterToMainPage();
+	}
+
+
+
+	private void tryToEnterToMainPage() {
+
+		val uid = sharedPreferences.getString(getString(R.string.preference_app_uid), null);
+		if (uid != null && !uid.isEmpty()) {
+			startActivity(new Intent(this, MainPageActivity.class));
+			finish();
+		}
 	}
 
 

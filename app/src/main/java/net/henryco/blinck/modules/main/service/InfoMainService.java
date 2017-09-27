@@ -1,7 +1,5 @@
 package net.henryco.blinck.modules.main.service;
 
-import net.henryco.blinck.modules.app.userprofile.UserProfileFormRepository;
-
 /**
  * Created by HenryCo on 27/09/17.
  */

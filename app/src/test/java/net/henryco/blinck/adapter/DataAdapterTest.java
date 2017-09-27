@@ -21,7 +21,6 @@ import org.robolectric.annotation.Config;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class)
-
 public class DataAdapterTest {
 
 	private ExampleDTO_One sourceOne;

@@ -1,4 +1,4 @@
-package net.henryco.blinck.modules.app;
+package net.henryco.blinck.configuration;
 
 import net.henryco.blinck.util.form.user.UserProfileForm;
 import net.henryco.sqlightning.reflect.annotations.config.Configuration;

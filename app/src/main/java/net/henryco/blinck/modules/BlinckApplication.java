@@ -2,7 +2,7 @@ package net.henryco.blinck.modules;
 
 import android.app.Application;
 import com.facebook.appevents.AppEventsLogger;
-import net.henryco.blinck.modules.app.DataBaseConfiguration;
+import net.henryco.blinck.configuration.DataBaseConfiguration;
 import net.henryco.blinck.modules.app.AppModule;
 import net.henryco.blinck.modules.login.DaggerLoginComponent;
 import net.henryco.blinck.modules.login.LoginComponent;
@@ -26,7 +26,7 @@ public class BlinckApplication extends Application {
 		super.onCreate();
 
 		AppEventsLogger.activateApp(this);
-		SQLightning.run(this, DataBaseConfiguration.class, DataBaseConfiguration.class);
+		SQLightning.run(this, DataBaseConfiguration.class);
 
 		initializeDagger2();
 	}
