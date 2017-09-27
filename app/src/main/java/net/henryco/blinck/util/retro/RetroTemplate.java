@@ -1,5 +1,7 @@
 package net.henryco.blinck.util.retro;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import okhttp3.OkHttpClient;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
@@ -20,16 +22,30 @@ public final class RetroTemplate {
 	private OkHttpClient client = null;
 
 
+	private Converter.Factory createConverterFactory() {
+
+		if (converterFactory != null)
+			return converterFactory;
+
+		return GsonConverterFactory.create(
+				new GsonBuilder()
+						.excludeFieldsWithoutExposeAnnotation()
+				.create()
+		);
+	}
+
+
 	private Retrofit createRetrofit(Class<?> retroServiceClass) {
 
 		Retrofit.Builder builder = new Retrofit.Builder();
 		builder.baseUrl(processAnnotationURL(retroServiceClass, baseURL));
-		builder.addConverterFactory(converterFactory == null ? GsonConverterFactory.create() : converterFactory);
+		builder.addConverterFactory(createConverterFactory());
 
 		if (client != null) builder.client(client);
 
 		return builder.build();
 	}
+
 
 	private String processAnnotationURL(Class<?> retroServiceClass, String baseURL) {
 
@@ -49,7 +65,8 @@ public final class RetroTemplate {
 
 
 	public <T> T create(Class<T> retroServiceClass) {
-		return createRetrofit(retroServiceClass).create(retroServiceClass);
+		return createRetrofit(retroServiceClass)
+				.create(retroServiceClass);
 	}
 
 

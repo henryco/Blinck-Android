@@ -3,23 +3,35 @@ package net.henryco.blinck.util.form.user;
 import com.google.gson.annotations.Expose;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.henryco.sqlightning.reflect.annotations.column.Column;
+import net.henryco.sqlightning.reflect.annotations.column.Id;
+import net.henryco.sqlightning.reflect.annotations.column.Relation;
+import net.henryco.sqlightning.reflect.annotations.repository.Entity;
+import net.henryco.sqlightning.reflect.annotations.repository.Table;
 
 /**
  * Created by HenryCo on 25/09/17.
  */
-@Data @NoArgsConstructor
+@Data @NoArgsConstructor @Entity
 public final class UserProfileForm {
 
-	private @Expose
-	UserNameForm userName;
+	private @Id
+	@Column Long id;
+
+
+	private @Expose @Relation @Column
+	@Table UserNameForm userName;
+
 
 	private @Expose
-	String gender;
+	@Column String gender;
+
 
 	private @Expose
-	String about;
+	@Column String about;
+
 
 	private @Expose
-	Long birthday;
+	@Column Long birthday;
 
 }

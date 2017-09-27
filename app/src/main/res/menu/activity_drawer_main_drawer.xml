@@ -4,16 +4,31 @@
 <group android:checkableBehavior="single">
 	<item
 			android:id="@+id/nav_profile"
-			android:title="Profile"/>
+			android:title="Profile"
+			android:icon="@mipmap/ic_person_black"/>
 	<item
 			android:id="@+id/nav_settings"
-			android:title="Settings"/>
+			android:title="Settings" android:icon="@mipmap/ic_settings_black"/>
 </group>
 	
-	<item android:title="">
-		<item
-				android:id="@+id/nav_logout"
-				android:title="Logout"/>
-	</item>
+<group android:checkableBehavior="single">
+	
+	<item
+			android:title=""
+			android:checkable="false"
+			android:enabled="false"/>
+	
+	<item
+			android:id="@+id/nav_logout"
+			android:title="Logout" android:icon="@mipmap/ic_logout_black"/>
+</group>
+	
+	<!--<item android:title="" android:visible="false">-->
+		<!--<menu>-->
+			<!--<item-->
+					<!--android:id="@+id/nav_logout"-->
+					<!--android:title="Logout" android:icon="@mipmap/ic_logout_black"/>-->
+		<!--</menu>-->
+	<!--</item>-->
 
 </menu>
