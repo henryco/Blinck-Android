@@ -111,7 +111,7 @@ public class MainPageActivity extends AppCompatActivity
 		val uid = sharedPreferences.getString(getString(R.string.preference_app_uid), null);
 		val token = sharedPreferences.getString(getString(R.string.preference_app_token), null);
 
-		infoMainService.loadProfileFromServer(Long.decode(uid), token, profileForm -> {
+		infoMainService.loadAndCacheProfileFromServer(Long.decode(uid), token, profileForm -> {
 			System.out.println("FORM: "+profileForm);
 			runOnUiThread(() -> {
 				name.setText(profileForm.getUserName().getFirstName());

@@ -33,6 +33,7 @@ public class InfoMainService {
 
 	public final boolean cacheProfile(UserProfileForm form) {
 
+		if (form == null) return false;
 		if (profileFormRepository.isRecordExist(form.getId()))
 			return profileFormRepository.updateRecord(form);
 		else return profileFormRepository.saveRecord(form);
@@ -42,20 +43,30 @@ public class InfoMainService {
 	public final void loadProfileFromServer(Long id, Serializable authentication,
 	                                        BlinckConsumer<UserProfileForm> profileConsumer) {
 
-		System.out.println("AUTH: "+authentication);
 		infoService.getUserProfile(authentication.toString(), id)
-				.enqueue(new RetroCallback<>(
-						(call, response) -> profileConsumer.consume(response.body())));
+				.enqueue(new RetroCallback<>((call, response) -> profileConsumer.consume(response.body())));
 	}
 
 
 	public final void loadAndCacheProfileFromServer(Long id, Serializable authentication,
 	                                               BlinckConsumer<UserProfileForm> profileConsumer) {
 
-		infoService.getUserProfile(authentication.toString(), id)
-				.enqueue(new RetroCallback<>((userProfileFormCall, response) -> {
+		final UserProfileForm cached = getProfileFromCache(id);
+		if (cached != null) profileConsumer.consume(cached);
 
-				}));
+		infoService.getUserProfile(authentication.toString(), id).enqueue(
+
+				new RetroCallback<>((call, response) -> {
+
+					UserProfileForm body = response.body();
+					if (body != null) {
+						body.setId(id);
+						body.getUserName().setId(id);
+						cacheProfile(body);
+						profileConsumer.consume(body);
+					}
+				})
+		);
 	}
 
 }
