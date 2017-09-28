@@ -116,7 +116,7 @@ public class MainPageActivity extends AppCompatActivity
 		infoMainService.loadAndCacheProfileFromServer(authorization, profileForm
 				-> runOnUiThread(() -> name.setText(profileForm.getUserName().getFirstName())));
 
-		mediaMainService.loadProfileAvatarImage(authorization,
+		mediaMainService.loadAndCacheProfileAvatarImage(this, authorization,
 				consumer -> runOnUiThread(() -> image.setImageBitmap(consumer)));
 	}
 

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Toast;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -78,7 +79,8 @@ public class LoginActivity extends AppCompatActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		facebookLoginBroker.onActivityResult(requestCode, resultCode, data);
+		if (facebookLoginBroker != null)
+			facebookLoginBroker.onActivityResult(requestCode, resultCode, data);
 	}
 
 
@@ -86,8 +88,13 @@ public class LoginActivity extends AppCompatActivity {
 	private void tryToConnect() {
 
 		if (connection_attempt_numb++ < CONNECTION_ATTEMPTS_MAX_NUMB) {
-			loginService.getRequiredFacebookPermissionsList()
-					.enqueue(new RetroCallback<>(onResponse));
+
+			loginService.getRequiredFacebookPermissionsList().enqueue(
+					new RetroCallback<>(
+							onResponse,
+							(listCall, throwable) -> tryToConnect()
+					));
+
 		} else {
 			Toast.makeText(this, "Looks like there is connection troubles", Toast.LENGTH_LONG).show();
 			tryToEnterToMainPage();
@@ -100,6 +107,7 @@ public class LoginActivity extends AppCompatActivity {
 
 		final AccessToken accessToken = AccessToken.getCurrentAccessToken();
 		loginButton.setReadPermissions(permissions);
+		loginButton.setVisibility(View.VISIBLE);
 
 		facebookLoginBroker = new FacebookLoginBroker(loginButton, CallbackManager.Factory.create());
 		facebookLoginBroker.onSuccess(loginResult -> onFacebookAuthSuccess_2(loginResult.getAccessToken()));
@@ -131,12 +139,19 @@ public class LoginActivity extends AppCompatActivity {
 		loginService.getUserStatus(app_token).enqueue(new RetroCallback<>((call, response) -> {
 
 			UserStatusForm status = response.body();
-			if (status != null && status.getActive())
+
+			if (status == null) {
+				tryToConnect();
+
+			} else if (status.getActive()) {
 				onGetStatusSuccess_4(status.getPrincipal(), app_token);
-			else {
+
+			} else {
 				facebookLoginBroker.reset();
 				tryToConnect();
 			}
+
+
 		},(userStatusFormCall, throwable) -> tryToConnect()));
 	}
 
