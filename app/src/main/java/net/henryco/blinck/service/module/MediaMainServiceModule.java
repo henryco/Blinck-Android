@@ -49,9 +49,7 @@ public class MediaMainServiceModule {
 
 
 	@Singleton @Provides
-	public MediaMainService provideMediaService(
-			UserMediaFormRepository mediaRepo,
-			ProfileMediaHttpService httpService) {
-		return new MediaMainService(mediaRepo, httpService);
+	public MediaMainService provideMediaService(ProfileMediaHttpService httpService) {
+		return new MediaMainService(httpService);
 	}
 }

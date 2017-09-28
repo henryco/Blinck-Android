@@ -24,7 +24,6 @@ public final class FileUtils {
 
 		try {
 
-
 			InputStream inputStream = null;
 			OutputStream outputStream = null;
 
@@ -45,7 +44,7 @@ public final class FileUtils {
 					outputStream.write(fileReader, 0, read);
 					fileSizeDownloaded += read;
 
-					Log.d("Media download", "file download: " + fileSizeDownloaded + " of " + fileSize);
+					Log.d("Media saved", "file saved: " + fileSizeDownloaded + " of " + fileSize);
 
 				}
 
@@ -53,6 +52,7 @@ public final class FileUtils {
 				return true;
 
 			} catch (IOException e) {
+				e.printStackTrace();
 				return false;
 
 			} finally {
@@ -65,6 +65,7 @@ public final class FileUtils {
 			}
 
 		} catch (IOException e) {
+			e.printStackTrace();
 			return false;
 		}
 	}

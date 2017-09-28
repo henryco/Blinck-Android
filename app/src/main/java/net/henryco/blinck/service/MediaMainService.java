@@ -3,7 +3,7 @@ package net.henryco.blinck.service;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import net.henryco.blinck.service.database.UserMediaFormRepository;
+import android.util.Log;
 import net.henryco.blinck.service.http.ProfileMediaHttpService;
 import net.henryco.blinck.util.Authorization;
 import net.henryco.blinck.util.FileUtils;
@@ -19,7 +19,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.InputStream;
 
-import static net.henryco.blinck.service.MediaMainService.IMAGE_DIR;
+
 
 /**
  * Created by HenryCo on 28/09/17.
@@ -27,15 +27,11 @@ import static net.henryco.blinck.service.MediaMainService.IMAGE_DIR;
 
 public class MediaMainService {
 
-	protected static final String IMAGE_DIR = "images";
 
-	private final UserMediaFormRepository mediaRepo;
 	private final ProfileMediaHttpService httpService;
 
 
-	public MediaMainService(UserMediaFormRepository mediaRepo,
-	                        ProfileMediaHttpService httpService) {
-		this.mediaRepo = mediaRepo;
+	public MediaMainService(ProfileMediaHttpService httpService) {
 		this.httpService = httpService;
 	}
 
@@ -66,22 +62,6 @@ public class MediaMainService {
 
 
 
-	public void loadAndCacheProfileMediaInfo(Authorization authorization,
-	                                         BlinckConsumer<UserMediaForm> mediaFormConsumer) {
-
-		UserMediaForm mediaForm = mediaRepo.getRecordById(authorization.getUid());
-		if (mediaForm != null) mediaFormConsumer.consume(mediaForm);
-
-		loadProfileMediaInfo(authorization, form -> {
-			if (form != null) {
-				mediaFormConsumer.consume(form);
-				Helper.saveMediaInfo(mediaRepo, form, authorization);
-			}
-		});
-	}
-
-
-
 	public void loadAndCacheProfileAvatarImage(Context context,
 	                                           Authorization authorization,
 	                                           BlinckConsumer<Bitmap> bitmapConsumer) {
@@ -102,19 +82,7 @@ public class MediaMainService {
 
 final class Helper {
 
-
-	static void saveMediaInfo(UserMediaFormRepository mediaRepo,
-	                          UserMediaForm mediaForm,
-	                          Authorization authorization) {
-
-		final Long id = authorization.getUid();
-
-		mediaForm.setId(id);
-		mediaForm.getImages().setId(id);
-
-		if (mediaRepo.isRecordExist(id)) mediaRepo.updateRecord(mediaForm);
-		else mediaRepo.saveRecord(mediaForm);
-	}
+	private static final String IMAGE_DIR = "images";
 
 
 	static void consumerResponse(Response<ResponseBody> response,
@@ -141,14 +109,17 @@ final class Helper {
 
 	static Bitmap loadBitmapFromFile(Context context, String fileName) {
 
-		File file = FileUtils.getCachePath(context, IMAGE_DIR, fileName);
-		return BitmapFactory.decodeFile(file.getPath());
+		File root = FileUtils.getCachePath(context, IMAGE_DIR);
+		return BitmapFactory.decodeFile(new File(root, fileName).getPath());
 	}
 
 	static void saveBitmapToFile(Context context, Bitmap bitmap, String fileName) {
 
-		File file = FileUtils.getCachePath(context, IMAGE_DIR, fileName);
-		FileUtils.writeFileToDisk(getStream(bitmap), bitmap.getByteCount(), file);
+		File root = FileUtils.getCachePath(context, IMAGE_DIR);
+		File file = new File(root, fileName);
+		boolean saved = FileUtils.writeFileToDisk(getStream(bitmap), bitmap.getByteCount(), file);
+
+		Log.d("Media service", "Avatar saved: "+saved);
 	}
 
 
