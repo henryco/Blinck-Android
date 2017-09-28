@@ -14,7 +14,7 @@ import net.henryco.sqlightning.reflect.annotations.repository.Table;
  * Created by HenryCo on 28/09/17.
  */
 @Data @Entity @NoArgsConstructor
-public class UserMediaForm {
+public final class UserMediaForm {
 
 
 	@Column @Id

@@ -2,11 +2,11 @@ package net.henryco.blinck.service;
 
 import net.henryco.blinck.service.database.UserProfileFormRepository;
 import net.henryco.blinck.service.http.ProfileInfoHttpService;
+import net.henryco.blinck.util.Authorization;
 import net.henryco.blinck.util.form.user.UserProfileForm;
 import net.henryco.blinck.util.function.BlinckConsumer;
 import net.henryco.blinck.util.retro.RetroCallback;
 
-import java.io.Serializable;
 
 /**
  * Created by HenryCo on 27/09/17.
@@ -42,21 +42,22 @@ public class InfoMainService {
 	}
 
 
-	public final void loadProfileFromServer(Long id, Serializable authentication,
+	public final void loadProfileFromServer(Authorization authorization,
 	                                        BlinckConsumer<UserProfileForm> profileConsumer) {
 
-		infoService.getUserProfile(authentication.toString(), id)
+		infoService.getUserProfile(authorization.getToken(), authorization.getUid())
 				.enqueue(new RetroCallback<>((call, response) -> profileConsumer.consume(response.body())));
 	}
 
 
-	public final void loadAndCacheProfileFromServer(Long id, Serializable authentication,
+	public final void loadAndCacheProfileFromServer(Authorization authorization,
 	                                               BlinckConsumer<UserProfileForm> profileConsumer) {
 
+		final Long id = authorization.getUid();
 		final UserProfileForm cached = getProfileFromCache(id);
 		if (cached != null) profileConsumer.consume(cached);
 
-		infoService.getUserProfile(authentication.toString(), id).enqueue(
+		infoService.getUserProfile(authorization.getToken(), id).enqueue(
 
 				new RetroCallback<>((call, response) -> {
 

@@ -2,6 +2,7 @@ package net.henryco.blinck.groups.main.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -112,13 +113,11 @@ public class MainPageActivity extends AppCompatActivity
 
 		Authorization authorization = new Authorization(this);
 
-		infoMainService.loadAndCacheProfileFromServer(authorization.getUid(), authorization.getToken(), profileForm
+		infoMainService.loadAndCacheProfileFromServer(authorization, profileForm
 				-> runOnUiThread(() -> name.setText(profileForm.getUserName().getFirstName())));
 
-		mediaMainService.loadProfileMediaInfo(authorization, mediaForm -> {
-			System.out.println("MediaForm: "+mediaForm);
-		});
-
+		mediaMainService.loadProfileAvatarImage(authorization,
+				consumer -> runOnUiThread(() -> image.setImageBitmap(consumer)));
 	}
 
 
