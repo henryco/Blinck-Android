@@ -1,6 +1,6 @@
-package net.henryco.blinck.modules.main.service;
+package net.henryco.blinck.service.http;
 
-import net.henryco.blinck.modules.BlinckServerAPI;
+import net.henryco.blinck.configuration.BlinckServerAPI;
 import net.henryco.blinck.util.form.user.UserProfileForm;
 import net.henryco.blinck.util.retro.RetroURL;
 import retrofit2.Call;
@@ -13,7 +13,7 @@ import retrofit2.http.Query;
  */
 
 @RetroURL(BlinckServerAPI.SERVER_URL)
-public interface BlinckProfileInfoService {
+public interface ProfileInfoHttpService {
 
 	@GET("/protected/user/profile/bio")
 	Call<UserProfileForm> getUserProfile(

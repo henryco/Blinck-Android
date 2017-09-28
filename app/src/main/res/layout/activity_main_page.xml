@@ -6,7 +6,7 @@
 												 android:layout_width="match_parent"
 												 android:layout_height="match_parent"
 												 android:fitsSystemWindows="true"
-												 tools:context="net.henryco.blinck.modules.main.activity.MainPageActivity">
+												 tools:context="net.henryco.blinck.groups.main.activity.MainPageActivity">
 	
 	<android.support.design.widget.AppBarLayout
 			android:id="@+id/appbar"

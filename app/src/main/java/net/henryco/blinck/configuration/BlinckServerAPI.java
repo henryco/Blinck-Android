@@ -1,4 +1,4 @@
-package net.henryco.blinck.modules;
+package net.henryco.blinck.configuration;
 
 /**
  * Created by HenryCo on 25/09/17.

@@ -1,15 +1,17 @@
-package net.henryco.blinck.modules;
+package net.henryco.blinck;
 
 import android.app.Application;
 import com.facebook.appevents.AppEventsLogger;
 import net.henryco.blinck.configuration.DataBaseConfiguration;
-import net.henryco.blinck.modules.app.AppModule;
-import net.henryco.blinck.modules.login.DaggerLoginComponent;
-import net.henryco.blinck.modules.login.LoginComponent;
-import net.henryco.blinck.modules.login.LoginModule;
-import net.henryco.blinck.modules.main.DaggerMainComponent;
-import net.henryco.blinck.modules.main.MainComponent;
-import net.henryco.blinck.modules.main.MainModule;
+import net.henryco.blinck.groups.app.AppModule;
+import net.henryco.blinck.groups.login.DaggerLoginComponent;
+import net.henryco.blinck.groups.login.LoginComponent;
+import net.henryco.blinck.groups.login.LoginModule;
+import net.henryco.blinck.groups.main.DaggerMainComponent;
+import net.henryco.blinck.groups.main.MainComponent;
+import net.henryco.blinck.groups.main.MainModule;
+import net.henryco.blinck.service.module.InfoMainServiceModule;
+import net.henryco.blinck.service.module.MediaMainServiceModule;
 import net.henryco.sqlightning.SQLightning;
 
 
@@ -53,6 +55,8 @@ public class BlinckApplication extends Application {
 		this.mainComponent = DaggerMainComponent.builder()
 				.appModule(appModule)
 				.mainModule(new MainModule(this))
+				.infoMainServiceModule(new InfoMainServiceModule(this))
+				.mediaMainServiceModule(new MediaMainServiceModule(this))
 		.build();
 	}
 

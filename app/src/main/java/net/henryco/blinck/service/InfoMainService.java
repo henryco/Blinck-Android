@@ -1,5 +1,7 @@
-package net.henryco.blinck.modules.main.service;
+package net.henryco.blinck.service;
 
+import net.henryco.blinck.service.database.UserProfileFormRepository;
+import net.henryco.blinck.service.http.ProfileInfoHttpService;
 import net.henryco.blinck.util.form.user.UserProfileForm;
 import net.henryco.blinck.util.function.BlinckConsumer;
 import net.henryco.blinck.util.retro.RetroCallback;
@@ -13,11 +15,11 @@ import java.io.Serializable;
 public class InfoMainService {
 
 
-	private final BlinckProfileInfoService infoService;
+	private final ProfileInfoHttpService infoService;
 	private final UserProfileFormRepository profileFormRepository;
 
 
-	public InfoMainService(BlinckProfileInfoService infoService,
+	public InfoMainService(ProfileInfoHttpService infoService,
 	                       UserProfileFormRepository profileFormRepository) {
 		this.infoService = infoService;
 		this.profileFormRepository = profileFormRepository;

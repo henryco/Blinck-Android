@@ -1,4 +1,4 @@
-package net.henryco.blinck.modules.login.broker;
+package net.henryco.blinck.groups.login.broker;
 
 import android.support.annotation.Nullable;
 

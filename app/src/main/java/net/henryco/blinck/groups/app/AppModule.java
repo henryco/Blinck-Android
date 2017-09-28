@@ -1,9 +1,8 @@
-package net.henryco.blinck.modules.app;
+package net.henryco.blinck.groups.app;
 
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import dagger.Module;
 import dagger.Provides;
 import lombok.val;

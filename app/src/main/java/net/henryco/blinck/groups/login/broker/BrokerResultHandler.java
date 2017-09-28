@@ -1,4 +1,4 @@
-package net.henryco.blinck.modules.login.broker;
+package net.henryco.blinck.groups.login.broker;
 
 /**
  * Created by HenryCo on 20/08/17.

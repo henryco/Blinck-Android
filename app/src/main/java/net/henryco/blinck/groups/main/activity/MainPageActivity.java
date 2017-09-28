@@ -1,4 +1,4 @@
-package net.henryco.blinck.modules.main.activity;
+package net.henryco.blinck.groups.main.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,14 +12,15 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.facebook.login.LoginManager;
 import com.infideap.drawerbehavior.AdvanceDrawerLayout;
-import lombok.val;
 import net.henryco.blinck.R;
-import net.henryco.blinck.modules.BlinckApplication;
-import net.henryco.blinck.modules.login.activity.LoginActivity;
-import net.henryco.blinck.modules.main.service.InfoMainService;
+import net.henryco.blinck.BlinckApplication;
+import net.henryco.blinck.groups.login.activity.LoginActivity;
+import net.henryco.blinck.service.InfoMainService;
+import net.henryco.blinck.service.MediaMainService;
 import net.henryco.blinck.util.Authorization;
 import net.henryco.blinck.util.reflect.AutoFind;
 import net.henryco.blinck.util.reflect.AutoFinder;
@@ -32,6 +33,7 @@ public class MainPageActivity extends AppCompatActivity
 
 	@Inject SharedPreferences sharedPreferences;
 	@Inject InfoMainService infoMainService;
+	@Inject MediaMainService mediaMainService;
 
 
 	/**
@@ -45,6 +47,7 @@ public class MainPageActivity extends AppCompatActivity
 
 	@AutoFind(R.id.toolbar)
 	private Toolbar toolbar;
+
 
 
 	@Override
@@ -105,11 +108,17 @@ public class MainPageActivity extends AppCompatActivity
 		navigationView.setNavigationItemSelectedListener(this);
 
 		TextView name = (TextView) navigationView.getHeaderView(0).findViewById(R.id.profile_text);
+		ImageView image = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.profile_image);
 
 		Authorization authorization = new Authorization(this);
 
 		infoMainService.loadAndCacheProfileFromServer(authorization.getUid(), authorization.getToken(), profileForm
 				-> runOnUiThread(() -> name.setText(profileForm.getUserName().getFirstName())));
+
+		mediaMainService.loadProfileMediaInfo(authorization, mediaForm -> {
+			System.out.println("MediaForm: "+mediaForm);
+		});
+
 	}
 
 

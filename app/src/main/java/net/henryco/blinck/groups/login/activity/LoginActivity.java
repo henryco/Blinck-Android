@@ -1,4 +1,4 @@
-package net.henryco.blinck.modules.login.activity;
+package net.henryco.blinck.groups.login.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,11 +10,11 @@ import com.facebook.CallbackManager;
 import com.facebook.login.widget.LoginButton;
 import lombok.val;
 import net.henryco.blinck.R;
-import net.henryco.blinck.modules.BlinckApplication;
-import net.henryco.blinck.modules.BlinckServerAPI;
-import net.henryco.blinck.modules.login.broker.FacebookLoginBroker;
-import net.henryco.blinck.modules.login.service.BlinckLoginService;
-import net.henryco.blinck.modules.main.activity.MainPageActivity;
+import net.henryco.blinck.BlinckApplication;
+import net.henryco.blinck.configuration.BlinckServerAPI;
+import net.henryco.blinck.groups.login.broker.FacebookLoginBroker;
+import net.henryco.blinck.groups.login.service.BlinckLoginService;
+import net.henryco.blinck.groups.main.activity.MainPageActivity;
 import net.henryco.blinck.util.form.login.UserLoginForm;
 import net.henryco.blinck.util.form.login.UserStatusForm;
 import net.henryco.blinck.util.function.BlinckBiConsumer;

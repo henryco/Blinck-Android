@@ -1,11 +1,11 @@
-package net.henryco.blinck.modules.main;
+package net.henryco.blinck.service.module;
 
 import android.app.Application;
 import dagger.Module;
 import dagger.Provides;
-import net.henryco.blinck.modules.main.service.UserProfileFormRepository;
-import net.henryco.blinck.modules.main.service.BlinckProfileInfoService;
-import net.henryco.blinck.modules.main.service.InfoMainService;
+import net.henryco.blinck.service.InfoMainService;
+import net.henryco.blinck.service.database.UserProfileFormRepository;
+import net.henryco.blinck.service.http.ProfileInfoHttpService;
 import net.henryco.blinck.util.retro.RetroTemplate;
 import net.henryco.sqlightning.SQLightning;
 import okhttp3.OkHttpClient;
@@ -13,29 +13,29 @@ import okhttp3.OkHttpClient;
 import javax.inject.Singleton;
 import java.util.concurrent.TimeUnit;
 
-
+/**
+ * Created by HenryCo on 28/09/17.
+ */
 @Module
-public class MainModule {
-
+public class InfoMainServiceModule {
 
 	private final Application application;
-	public MainModule(Application application) {
+
+	public InfoMainServiceModule(Application application) {
 		this.application = application;
 	}
 
-
-
 	@Singleton @Provides
-	public BlinckProfileInfoService provideRestService() {
+	public ProfileInfoHttpService provideRestService() {
 
 		OkHttpClient client = new OkHttpClient.Builder()
 				.readTimeout(30, TimeUnit.SECONDS)
 				.connectTimeout(30, TimeUnit.SECONDS)
-		.build();
+				.build();
 
 		return new RetroTemplate()
 				.setHttpClient(client)
-		.create(BlinckProfileInfoService.class);
+				.create(ProfileInfoHttpService.class);
 	}
 
 
@@ -49,7 +49,7 @@ public class MainModule {
 
 	@Provides @Singleton
 	public InfoMainService provideInfoService(
-			BlinckProfileInfoService blinckProfileInfoService,
+			ProfileInfoHttpService blinckProfileInfoService,
 			UserProfileFormRepository profileFormRepository) {
 
 		return new InfoMainService(

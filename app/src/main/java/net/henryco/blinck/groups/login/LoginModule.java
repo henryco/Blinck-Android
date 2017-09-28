@@ -1,8 +1,8 @@
-package net.henryco.blinck.modules.login;
+package net.henryco.blinck.groups.login;
 
 import dagger.Module;
 import dagger.Provides;
-import net.henryco.blinck.modules.login.service.BlinckLoginService;
+import net.henryco.blinck.groups.login.service.BlinckLoginService;
 import net.henryco.blinck.util.retro.RetroTemplate;
 import okhttp3.OkHttpClient;
 

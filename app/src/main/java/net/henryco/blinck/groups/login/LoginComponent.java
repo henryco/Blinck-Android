@@ -1,8 +1,8 @@
-package net.henryco.blinck.modules.login;
+package net.henryco.blinck.groups.login;
 
 import dagger.Component;
-import net.henryco.blinck.modules.app.AppModule;
-import net.henryco.blinck.modules.login.activity.LoginActivity;
+import net.henryco.blinck.groups.app.AppModule;
+import net.henryco.blinck.groups.login.activity.LoginActivity;
 
 import javax.inject.Singleton;
 
