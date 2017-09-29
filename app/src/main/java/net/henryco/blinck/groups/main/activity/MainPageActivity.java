@@ -20,6 +20,7 @@ import com.infideap.drawerbehavior.AdvanceDrawerLayout;
 import net.henryco.blinck.R;
 import net.henryco.blinck.BlinckApplication;
 import net.henryco.blinck.groups.login.activity.LoginActivity;
+import net.henryco.blinck.groups.profile.activity.ProfileActivity;
 import net.henryco.blinck.service.ProfileMainService;
 import net.henryco.blinck.service.MediaMainService;
 import net.henryco.blinck.util.Authorization;
@@ -32,9 +33,10 @@ public class MainPageActivity extends AppCompatActivity
 		implements NavigationView.OnNavigationItemSelectedListener {
 
 
+	private static final int CODE_ACTIVITY_PROFILE = 1;
+
 	@Inject SharedPreferences sharedPreferences;
-	@Inject
-	ProfileMainService infoMainService;
+	@Inject ProfileMainService infoMainService;
 	@Inject MediaMainService mediaMainService;
 
 
@@ -66,6 +68,18 @@ public class MainPageActivity extends AppCompatActivity
 		initDrawer();
 
 		initTabLayout();
+	}
+
+
+
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
+		if (requestCode == CODE_ACTIVITY_PROFILE) {
+			if (resultCode == RESULT_OK) initDrawer();
+		}
 	}
 
 
@@ -161,24 +175,30 @@ public class MainPageActivity extends AppCompatActivity
 
 		switch (item.getItemId()) {
 
+
 			case R.id.nav_profile:
 
-				break;
+				drawer.closeDrawer(GravityCompat.START);
+				delayedStart(() -> startActivityForResult(
+						new Intent(this, ProfileActivity.class),
+						CODE_ACTIVITY_PROFILE
+				));
+
+				return false;
+
 
 			case R.id.nav_notifications:
 
 				drawer.closeDrawer(GravityCompat.START);
-
-				new Handler().postDelayed(()
-						-> runOnUiThread(()
-						-> drawer.openDrawer(GravityCompat.END)), 450
-				);
+				delayedStart(() -> drawer.openDrawer(GravityCompat.END));
 
 				return false;
+
 
 			case R.id.nav_settings:
 
 				break;
+
 
 			case R.id.nav_logout:
 
@@ -186,8 +206,11 @@ public class MainPageActivity extends AppCompatActivity
 				LoginManager.getInstance().logOut();
 				Authorization.reset(this);
 
-				startActivity(new Intent(this, LoginActivity.class));
-				finish();
+				delayedStart(() -> {
+					startActivity(new Intent(this, LoginActivity.class));
+					finish();
+				});
+
 				break;
 		}
 
@@ -195,6 +218,11 @@ public class MainPageActivity extends AppCompatActivity
 		drawer.closeDrawer(GravityCompat.END);
 
 		return true;
+	}
+
+
+	private void delayedStart(Runnable runnable) {
+		new Handler().postDelayed(() -> runOnUiThread(runnable), 400);
 	}
 
 }
