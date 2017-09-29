@@ -1,13 +1,10 @@
 package net.henryco.blinck.util.retro;
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import okhttp3.OkHttpClient;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by HenryCo on 19/08/17.

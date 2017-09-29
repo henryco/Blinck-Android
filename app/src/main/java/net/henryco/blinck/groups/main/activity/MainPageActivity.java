@@ -3,6 +3,7 @@ package net.henryco.blinck.groups.main.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -19,7 +20,7 @@ import com.infideap.drawerbehavior.AdvanceDrawerLayout;
 import net.henryco.blinck.R;
 import net.henryco.blinck.BlinckApplication;
 import net.henryco.blinck.groups.login.activity.LoginActivity;
-import net.henryco.blinck.service.InfoMainService;
+import net.henryco.blinck.service.ProfileMainService;
 import net.henryco.blinck.service.MediaMainService;
 import net.henryco.blinck.util.Authorization;
 import net.henryco.blinck.util.reflect.AutoFind;
@@ -32,7 +33,8 @@ public class MainPageActivity extends AppCompatActivity
 
 
 	@Inject SharedPreferences sharedPreferences;
-	@Inject InfoMainService infoMainService;
+	@Inject
+	ProfileMainService infoMainService;
 	@Inject MediaMainService mediaMainService;
 
 
@@ -55,10 +57,9 @@ public class MainPageActivity extends AppCompatActivity
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_drawer);
-
-		((BlinckApplication) getApplication()).getMainComponent().inject(this);
 		AutoFinder.inflateAndFind(this, R.id.dynamic_content, R.layout.activity_main_page);
 
+		((BlinckApplication) getApplication()).getMainComponent().inject(this);
 
 		setSupportActionBar(toolbar);
 
@@ -88,6 +89,7 @@ public class MainPageActivity extends AppCompatActivity
 	private void initDrawer() {
 
 		drawer.useCustomBehavior(GravityCompat.START);
+		drawer.setViewScale(GravityCompat.START, 0.5f);
 
 		ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
 				this, drawer, toolbar,
@@ -166,7 +168,12 @@ public class MainPageActivity extends AppCompatActivity
 			case R.id.nav_notifications:
 
 				drawer.closeDrawer(GravityCompat.START);
-				drawer.openDrawer(GravityCompat.END);
+
+				new Handler().postDelayed(()
+						-> runOnUiThread(()
+						-> drawer.openDrawer(GravityCompat.END)), 450
+				);
+
 				return false;
 
 			case R.id.nav_settings:
@@ -176,6 +183,7 @@ public class MainPageActivity extends AppCompatActivity
 			case R.id.nav_logout:
 
 				LoginManager.getInstance().logOut();
+				infoMainService.logout(new Authorization(this));
 				startActivity(new Intent(this, LoginActivity.class));
 				finish();
 				break;

@@ -12,20 +12,23 @@ import net.henryco.blinck.util.retro.RetroCallback;
  * Created by HenryCo on 27/09/17.
  */
 
-public class InfoMainService {
+public class ProfileMainService {
 
 
 	private final ProfileInfoHttpService infoService;
 	private final UserProfileFormRepository profileFormRepository;
 
 
-	public InfoMainService(ProfileInfoHttpService infoService,
-	                       UserProfileFormRepository profileFormRepository) {
+	public ProfileMainService(ProfileInfoHttpService infoService,
+	                          UserProfileFormRepository profileFormRepository) {
 		this.infoService = infoService;
 		this.profileFormRepository = profileFormRepository;
 	}
 
 
+	public final void logout(Authorization authorization) {
+		infoService.logOutUser(authorization.getToken()).enqueue(new RetroCallback<>());
+	}
 
 
 	public final UserProfileForm getProfileFromCache(Long id) {

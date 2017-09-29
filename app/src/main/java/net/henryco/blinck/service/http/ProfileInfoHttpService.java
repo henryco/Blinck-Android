@@ -6,6 +6,7 @@ import net.henryco.blinck.util.retro.RetroURL;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 /**
@@ -19,6 +20,11 @@ public interface ProfileInfoHttpService {
 	Call<UserProfileForm> getUserProfile(
 			@Header(BlinckServerAPI.HttpHeaders.AUTHORIZATION) String authorization,
 	        @Query("id") Long userId
+	);
+
+	@POST("/session/user/logout")
+	Call<String> logOutUser(
+			@Header(BlinckServerAPI.HttpHeaders.AUTHORIZATION) String authorization
 	);
 
 }

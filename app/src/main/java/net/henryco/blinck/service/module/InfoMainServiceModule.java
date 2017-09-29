@@ -3,7 +3,7 @@ package net.henryco.blinck.service.module;
 import android.app.Application;
 import dagger.Module;
 import dagger.Provides;
-import net.henryco.blinck.service.InfoMainService;
+import net.henryco.blinck.service.ProfileMainService;
 import net.henryco.blinck.service.database.UserProfileFormRepository;
 import net.henryco.blinck.service.http.ProfileInfoHttpService;
 import net.henryco.blinck.util.retro.RetroTemplate;
@@ -48,11 +48,11 @@ public class InfoMainServiceModule {
 
 
 	@Provides @Singleton
-	public InfoMainService provideInfoService(
+	public ProfileMainService provideInfoService(
 			ProfileInfoHttpService blinckProfileInfoService,
 			UserProfileFormRepository profileFormRepository) {
 
-		return new InfoMainService(
+		return new ProfileMainService(
 				blinckProfileInfoService,
 				profileFormRepository
 		);
