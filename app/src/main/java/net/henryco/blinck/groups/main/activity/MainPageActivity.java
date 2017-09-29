@@ -2,7 +2,6 @@ package net.henryco.blinck.groups.main.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -56,8 +55,9 @@ public class MainPageActivity extends AppCompatActivity
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_drawer);
+
 		((BlinckApplication) getApplication()).getMainComponent().inject(this);
-		AutoFinder.find(this);
+		AutoFinder.inflateAndFind(this, R.id.dynamic_content, R.layout.activity_main_page);
 
 
 		setSupportActionBar(toolbar);
