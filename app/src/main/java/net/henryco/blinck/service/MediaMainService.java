@@ -19,8 +19,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.InputStream;
 
-
-
 /**
  * Created by HenryCo on 28/09/17.
  */
@@ -95,6 +93,7 @@ final class Helper {
 		}
 	}
 
+
 	static void consumeBitmap(InputStream byteStream,
 	                                  BlinckConsumer<Bitmap> bitmapConsumer) {
 
@@ -112,6 +111,7 @@ final class Helper {
 		File root = FileUtils.getCachePath(context, IMAGE_DIR);
 		return BitmapFactory.decodeFile(new File(root, fileName).getPath());
 	}
+
 
 	static void saveBitmapToFile(Context context, Bitmap bitmap, String fileName) {
 

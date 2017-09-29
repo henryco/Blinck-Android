@@ -129,7 +129,8 @@ public class MainPageActivity extends AppCompatActivity
 
 		if (drawer.isDrawerOpen(GravityCompat.START))
 			drawer.closeDrawer(GravityCompat.START);
-
+		if (drawer.isDrawerOpen(GravityCompat.END))
+			drawer.closeDrawer(GravityCompat.END);
 		else super.onBackPressed();
 	}
 
@@ -141,11 +142,11 @@ public class MainPageActivity extends AppCompatActivity
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
 
 		//noinspection SimplifiableIfStatement
-		if (id == R.id.action_settings) {
-			return true;
+		switch (item.getItemId()) {
+			case R.id.action_settings:
+				return true;
 		}
 
 		return super.onOptionsItemSelected(item);
@@ -164,7 +165,9 @@ public class MainPageActivity extends AppCompatActivity
 
 			case R.id.nav_notifications:
 
-				break;
+				drawer.closeDrawer(GravityCompat.START);
+				drawer.openDrawer(GravityCompat.END);
+				return false;
 
 			case R.id.nav_settings:
 
@@ -179,6 +182,8 @@ public class MainPageActivity extends AppCompatActivity
 		}
 
 		drawer.closeDrawer(GravityCompat.START);
+		drawer.closeDrawer(GravityCompat.END);
+
 		return true;
 	}
 
