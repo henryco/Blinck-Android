@@ -113,7 +113,7 @@ public class MainPageActivity extends AppCompatActivity
 		TextView name = (TextView) navigationView.getHeaderView(0).findViewById(R.id.profile_text);
 		ImageView image = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.profile_image);
 
-		Authorization authorization = new Authorization(this);
+		Authorization authorization = Authorization.get(this);
 
 		infoMainService.loadAndCacheProfileFromServer(authorization, profileForm
 				-> runOnUiThread(() -> name.setText(profileForm.getUserName().getFirstName())));
@@ -182,8 +182,10 @@ public class MainPageActivity extends AppCompatActivity
 
 			case R.id.nav_logout:
 
+				infoMainService.logout(Authorization.get(this));
 				LoginManager.getInstance().logOut();
-				infoMainService.logout(new Authorization(this));
+				Authorization.reset(this);
+
 				startActivity(new Intent(this, LoginActivity.class));
 				finish();
 				break;

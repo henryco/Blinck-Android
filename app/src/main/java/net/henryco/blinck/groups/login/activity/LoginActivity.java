@@ -9,13 +9,12 @@ import android.widget.Toast;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.login.widget.LoginButton;
-import lombok.val;
 import net.henryco.blinck.R;
 import net.henryco.blinck.BlinckApplication;
-import net.henryco.blinck.configuration.BlinckServerAPI;
 import net.henryco.blinck.groups.login.broker.FacebookLoginBroker;
 import net.henryco.blinck.groups.login.service.BlinckLoginService;
 import net.henryco.blinck.groups.main.activity.MainPageActivity;
+import net.henryco.blinck.util.Authorization;
 import net.henryco.blinck.util.form.login.UserLoginForm;
 import net.henryco.blinck.util.form.login.UserStatusForm;
 import net.henryco.blinck.util.function.BlinckBiConsumer;
@@ -45,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
 	private final BlinckBiConsumer<Call<List<String>>, Response<List<String>>>
 			onResponse = (listCall, listResponse) -> {
 
-		List<String> list = listResponse.body();
+		final List<String> list = listResponse.body();
 		onGetPermissionsSuccess_1(list == null
 				? new String[] {
 					"user_birthday",
@@ -85,6 +84,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
+
 	private void tryToConnect() {
 
 		if (connection_attempt_numb++ < CONNECTION_ATTEMPTS_MAX_NUMB) {
@@ -100,6 +100,7 @@ public class LoginActivity extends AppCompatActivity {
 			tryToEnterToMainPage();
 		}
 	}
+
 
 
 
@@ -122,15 +123,40 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
+
 	private void onFacebookAuthSuccess_2(AccessToken accessToken) {
 
-		UserLoginForm form = new UserLoginForm(accessToken.getUserId(), accessToken.getToken());
-		loginService.postLoginForm(form)
-				.enqueue(new RetroCallback<>((call, response) ->
-						onAppAuthSuccess_3(response.headers().get(BlinckServerAPI.HttpHeaders.AUTHORIZATION))
-				, (voidCall, throwable) -> tryToConnect())
+
+		Authorization authorization = Authorization.get(this);
+		if (authorization.exists()) {
+
+			// FIXME: 29/09/17 Actually we are using the same id that FB, but in future it might change
+			if (accessToken.getUserId().equals(authorization.getUid().toString())) {
+				onAppAuthSuccess_3(authorization.getToken());
+				return;
+			}
+		}
+
+		getForAppAuthentication(accessToken);
+
+	}
+
+
+
+
+	private void getForAppAuthentication(AccessToken accessToken) {
+
+		loginService.postLoginForm(
+				new UserLoginForm(accessToken.getUserId(), accessToken.getToken())
+
+		).enqueue(
+				new RetroCallback<>(
+						(call, response) -> onAppAuthSuccess_3(response.headers().get(Authorization.HEADER)),
+						(voidCall, throwable) -> tryToConnect()
+				)
 		);
 	}
+
 
 
 
@@ -139,7 +165,6 @@ public class LoginActivity extends AppCompatActivity {
 		loginService.getUserStatus(app_token).enqueue(new RetroCallback<>((call, response) -> {
 
 			UserStatusForm status = response.body();
-
 			if (status == null) {
 				tryToConnect();
 
@@ -148,35 +173,35 @@ public class LoginActivity extends AppCompatActivity {
 
 			} else {
 				facebookLoginBroker.reset();
+				Authorization.reset(this);
 				tryToConnect();
 			}
-
 
 		},(userStatusFormCall, throwable) -> tryToConnect()));
 	}
 
 
 
+
 	private void onGetStatusSuccess_4(String userId, String app_token) {
 
-		SharedPreferences.Editor editor = sharedPreferences.edit();
-		editor.putString(getString(R.string.preference_app_token), app_token);
-		editor.putString(getString(R.string.preference_app_uid), userId);
-		editor.apply();
-
+		Authorization.save(this, userId, app_token);
 		tryToEnterToMainPage();
 	}
 
 
 
+
 	private void tryToEnterToMainPage() {
 
-		val uid = sharedPreferences.getString(getString(R.string.preference_app_uid), null);
-		if (uid != null && !uid.isEmpty()) {
+		if (Authorization.exists(this)) {
 			startActivity(new Intent(this, MainPageActivity.class));
 			finish();
+		} else {
+			// TODO: 29/09/17 SHOW CONNECTION ERROR VIEW
 		}
 	}
+
 
 
 }
