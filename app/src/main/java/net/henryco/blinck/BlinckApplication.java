@@ -10,6 +10,9 @@ import net.henryco.blinck.groups.login.LoginModule;
 import net.henryco.blinck.groups.main.DaggerMainComponent;
 import net.henryco.blinck.groups.main.MainComponent;
 import net.henryco.blinck.groups.main.MainModule;
+import net.henryco.blinck.groups.profile.DaggerProfileComponent;
+import net.henryco.blinck.groups.profile.ProfileComponent;
+import net.henryco.blinck.groups.profile.ProfileModule;
 import net.henryco.blinck.service.module.InfoMainServiceModule;
 import net.henryco.blinck.service.module.MediaMainServiceModule;
 import net.henryco.sqlightning.SQLightning;
@@ -21,6 +24,7 @@ public class BlinckApplication extends Application {
 	private AppModule appModule;
 	private LoginComponent loginComponent;
 	private MainComponent mainComponent;
+	private ProfileComponent profileComponent;
 
 
 	@Override
@@ -38,6 +42,7 @@ public class BlinckApplication extends Application {
 		createAppModule();
 		createLoginComponent();
 		createMainComponent();
+		createProfileComponent();
 	}
 
 	private void createAppModule() {
@@ -60,6 +65,13 @@ public class BlinckApplication extends Application {
 		.build();
 	}
 
+	private void createProfileComponent() {
+		this.profileComponent = DaggerProfileComponent.builder()
+				.profileModule(new ProfileModule())
+				.infoMainServiceModule(new InfoMainServiceModule(this))
+				.mediaMainServiceModule(new MediaMainServiceModule(this))
+		.build();
+	}
 
 
 
@@ -71,5 +83,9 @@ public class BlinckApplication extends Application {
 
 	public MainComponent getMainComponent() {
 		return this.mainComponent;
+	}
+
+	public ProfileComponent getProfileComponent() {
+		return this.profileComponent;
 	}
 }

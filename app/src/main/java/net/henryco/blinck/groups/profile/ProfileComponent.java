@@ -3,6 +3,8 @@ package net.henryco.blinck.groups.profile;
 import dagger.Component;
 import net.henryco.blinck.groups.app.AppModule;
 import net.henryco.blinck.groups.profile.activity.ProfileActivity;
+import net.henryco.blinck.service.module.InfoMainServiceModule;
+import net.henryco.blinck.service.module.MediaMainServiceModule;
 
 import javax.inject.Singleton;
 
@@ -11,8 +13,9 @@ import javax.inject.Singleton;
  */
 @Singleton
 @Component(modules = {
-		AppModule.class,
-		ProfileModule.class
+		ProfileModule.class,
+		InfoMainServiceModule.class,
+		MediaMainServiceModule.class
 }) public interface ProfileComponent {
 
 	void inject(ProfileActivity activity);

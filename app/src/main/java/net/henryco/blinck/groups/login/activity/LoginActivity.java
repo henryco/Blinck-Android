@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import com.facebook.AccessToken;
@@ -198,6 +199,7 @@ public class LoginActivity extends AppCompatActivity {
 			startActivity(new Intent(this, MainPageActivity.class));
 			finish();
 		} else {
+			Log.i("Connection", "Connection error");
 			// TODO: 29/09/17 SHOW CONNECTION ERROR VIEW
 		}
 	}

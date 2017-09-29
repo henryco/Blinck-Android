@@ -37,6 +37,7 @@ dependencies {
     })
 
 
+    compile group: 'joda-time', name: 'joda-time', version: '2.9.9'
 
     compile 'com.infideap.drawerbehavior:drawer-behavior:0.0.1'
     compile 'com.facebook.android:facebook-android-sdk:4.22.0'
