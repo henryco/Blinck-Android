@@ -5,11 +5,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import net.henryco.blinck.BlinckApplication;
 import net.henryco.blinck.R;
+import net.henryco.blinck.service.ProfileMainService;
+import net.henryco.blinck.service.ProfileUpdateService;
+import net.henryco.blinck.util.Authorization;
+import net.henryco.blinck.util.form.user.UserProfileForm;
 import net.henryco.blinck.util.reflect.AutoFind;
 import net.henryco.blinck.util.reflect.AutoFinder;
 
+import javax.inject.Inject;
+
 public class EditProfileActivity extends AppCompatActivity {
+
+
+	@Inject ProfileUpdateService profileUpdateService;
+	@Inject ProfileMainService profileMainService;
 
 
 	@Override
@@ -19,9 +30,18 @@ public class EditProfileActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_edit_profile);
 		AutoFinder.find(this);
 
-		// TODO: 30/09/17 DAGGER INJECTION
+		((BlinckApplication) getApplication()).getProfileComponent().inject(this);
 
 		initActionBar();
+
+		Authorization authorization = Authorization.get(this);
+//		UserProfileForm profileForm = profileMainService.getProfileFromCache(authorization.getUid());
+//
+//		System.out.println(profileForm);
+
+		profileUpdateService.updateNickname(authorization, "henryco", response -> {
+			System.out.println("Updated: "+response);
+		});
 	}
 
 
@@ -31,7 +51,6 @@ public class EditProfileActivity extends AppCompatActivity {
 		final ActionBar supportActionBar = getSupportActionBar();
 		if (supportActionBar != null) {
 			supportActionBar.setDisplayHomeAsUpEnabled(true);
-//			supportActionBar.setTitle("Edit profile");
 		}
 	}
 

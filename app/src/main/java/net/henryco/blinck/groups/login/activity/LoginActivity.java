@@ -1,19 +1,17 @@
 package net.henryco.blinck.groups.login.activity;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.Toast;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.login.widget.LoginButton;
-import net.henryco.blinck.R;
 import net.henryco.blinck.BlinckApplication;
+import net.henryco.blinck.R;
 import net.henryco.blinck.groups.login.broker.FacebookLoginBroker;
 import net.henryco.blinck.groups.login.service.BlinckLoginService;
 import net.henryco.blinck.groups.main.activity.MainPageActivity;

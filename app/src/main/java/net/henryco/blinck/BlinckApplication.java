@@ -15,6 +15,7 @@ import net.henryco.blinck.groups.profile.ProfileComponent;
 import net.henryco.blinck.groups.profile.ProfileModule;
 import net.henryco.blinck.service.module.InfoMainServiceModule;
 import net.henryco.blinck.service.module.MediaMainServiceModule;
+import net.henryco.blinck.service.module.UpdateProfileServiceModule;
 import net.henryco.sqlightning.SQLightning;
 
 
@@ -70,6 +71,7 @@ public class BlinckApplication extends Application {
 				.profileModule(new ProfileModule())
 				.infoMainServiceModule(new InfoMainServiceModule(this))
 				.mediaMainServiceModule(new MediaMainServiceModule(this))
+				.updateProfileServiceModule(new UpdateProfileServiceModule())
 		.build();
 	}
 
