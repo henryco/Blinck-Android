@@ -39,9 +39,6 @@ public class EditProfileActivity extends AppCompatActivity {
 //
 //		System.out.println(profileForm);
 
-		profileUpdateService.updateNickname(authorization, "henryco", response -> {
-			System.out.println("Updated: "+response);
-		});
 	}
 
 
