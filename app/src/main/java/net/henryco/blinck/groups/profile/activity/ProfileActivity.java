@@ -93,7 +93,12 @@ public class ProfileActivity extends AppCompatActivity {
 		);
 
 		mediaMainService.loadAndCacheProfileAvatarImage(this, authorization,
-				bitmap -> runOnUiThread(() -> toolbarImage.setImageBitmap(bitmap))
+				bitmap -> runOnUiThread(() -> {
+					toolbarImage.setImageBitmap(bitmap);
+					toolbarImage.setOnClickListener(v -> {
+						// TODO: 30/09/17
+					});
+				})
 		);
 	}
 
