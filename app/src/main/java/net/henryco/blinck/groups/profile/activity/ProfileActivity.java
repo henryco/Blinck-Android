@@ -139,6 +139,6 @@ public class ProfileActivity extends AppCompatActivity {
 final class Helper {
 
 	static String createTitle(String name, int age) {
-		return name + "  " + age;
+		return name + ",  " + age;
 	}
 }

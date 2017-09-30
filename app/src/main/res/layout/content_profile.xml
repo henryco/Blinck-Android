@@ -9,10 +9,141 @@
 		android:layout_height="match_parent"
 		tools:context="net.henryco.blinck.groups.profile.activity.ProfileActivity">
 	
-	<TextView
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_margin="@dimen/text_margin"
-			android:text="@string/large_text"/>
-
+	<LinearLayout
+			android:orientation="vertical"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content" android:id="@+id/container_profile"
+			android:layout_margin="@dimen/appbar_padding_top">
+		<Space
+				android:layout_width="match_parent"
+				android:layout_height="30dp"/>
+		<LinearLayout
+				android:orientation="vertical"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:id="@+id/container_name">
+			<TextView
+					android:text="Name"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content" android:id="@+id/title_name"
+					android:layout_marginLeft="@dimen/activity_vertical_margin" android:textStyle="bold"
+					android:textSize="14sp" android:layout_marginRight="@dimen/activity_vertical_margin"/>
+			<TextView
+					android:text="Name"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content" android:id="@+id/text_name" android:textSize="18sp"
+					android:layout_marginTop="4dp" android:layout_marginBottom="@dimen/appbar_padding_top"
+					android:layout_marginEnd="@dimen/activity_vertical_margin"
+					android:layout_marginLeft="@dimen/activity_vertical_margin"
+					android:layout_marginRight="@dimen/activity_vertical_margin"
+					android:layout_marginStart="@dimen/activity_vertical_margin"/>
+		</LinearLayout>
+		
+		
+		<LinearLayout
+				android:orientation="vertical"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent" android:layout_marginTop="@dimen/appbar_padding_top"
+				android:id="@+id/container_gender">
+			<TextView
+					android:text="Gender"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content" android:id="@+id/title_gender"
+					android:layout_marginLeft="@dimen/activity_vertical_margin" android:textStyle="bold"
+					android:textSize="14sp" android:layout_marginRight="@dimen/activity_vertical_margin"/>
+			<TextView
+					android:text="Gender"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content" android:id="@+id/text_gender" android:textSize="18sp"
+					android:layout_marginTop="4dp" android:layout_marginBottom="@dimen/appbar_padding_top"
+					android:layout_marginEnd="@dimen/activity_vertical_margin"
+					android:layout_marginLeft="@dimen/activity_vertical_margin"
+					android:layout_marginRight="@dimen/activity_vertical_margin"
+					android:layout_marginStart="@dimen/activity_vertical_margin"/>
+		</LinearLayout>
+		
+		
+		<LinearLayout
+				android:orientation="vertical"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent" android:layout_marginTop="@dimen/appbar_padding_top"
+				android:id="@+id/container_birthday">
+			<TextView
+					android:text="Birthday"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content" android:id="@+id/title_birthday"
+					android:layout_marginLeft="@dimen/activity_vertical_margin" android:textStyle="bold"
+					android:textSize="14sp" android:layout_marginRight="@dimen/activity_vertical_margin"/>
+			<TextView
+					android:text="Birthday"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content" android:id="@+id/text_birthday" android:textSize="18sp"
+					android:layout_marginTop="4dp"
+					android:layout_marginBottom="@dimen/appbar_padding_top"
+					android:layout_marginEnd="@dimen/activity_vertical_margin"
+					android:layout_marginLeft="@dimen/activity_vertical_margin"
+					android:layout_marginRight="@dimen/activity_vertical_margin"
+					android:layout_marginStart="@dimen/activity_vertical_margin"/>
+		</LinearLayout>
+		
+		<LinearLayout
+				android:orientation="vertical"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent" android:layout_marginTop="@dimen/activity_vertical_margin"
+				android:id="@+id/container_about">
+			<TextView
+					android:text="About"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content" android:id="@+id/title_about"
+					android:layout_marginLeft="@dimen/activity_vertical_margin" android:textStyle="bold"
+					android:textSize="14sp" android:layout_marginRight="@dimen/activity_vertical_margin"
+					android:layout_marginTop="@dimen/appbar_padding_top"/>
+			<TextView
+					android:text="There is no about yet..."
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content" android:id="@+id/text_about" android:textSize="18sp"
+					android:layout_margin="@dimen/activity_vertical_margin"/>
+		</LinearLayout>
+		
+		
+		<LinearLayout
+				android:orientation="vertical"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent" android:layout_marginTop="@dimen/activity_vertical_margin"
+				android:id="@+id/container_username">
+			<TextView
+					android:text="Username"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content" android:id="@+id/title_username"
+					android:layout_marginLeft="@dimen/activity_vertical_margin" android:textStyle="bold"
+					android:textSize="14sp" android:layout_marginRight="@dimen/activity_vertical_margin"/>
+			<LinearLayout
+					android:orientation="horizontal"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent">
+				<TextView
+						android:text="\@"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content" android:textSize="18sp"
+						android:layout_marginTop="4dp"
+						android:layout_marginLeft="@dimen/activity_vertical_margin"
+						android:layout_marginStart="@dimen/activity_vertical_margin"
+						android:id="@+id/text_username_prefix"
+						android:layout_marginRight="@dimen/com_facebook_auth_dialog_corner_radius_oversized"
+						android:layout_marginEnd="@dimen/com_facebook_auth_dialog_corner_radius_oversized"
+						android:textAllCaps="false" android:textStyle="bold"/>
+				<TextView
+						android:text="username"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content" android:id="@+id/text_username" android:textSize="18sp"
+						android:layout_marginTop="4dp"
+						android:layout_marginBottom="@dimen/appbar_padding_top"
+						android:layout_marginEnd="@dimen/activity_vertical_margin"
+						android:layout_marginRight="@dimen/activity_vertical_margin"
+						android:layout_weight="1"/>
+			</LinearLayout>
+		</LinearLayout>
+		
+		
+	</LinearLayout>
 </android.support.v4.widget.NestedScrollView>
