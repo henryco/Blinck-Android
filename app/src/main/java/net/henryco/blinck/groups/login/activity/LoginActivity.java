@@ -1,11 +1,13 @@
 package net.henryco.blinck.groups.login.activity;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Toast;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -73,6 +75,7 @@ public class LoginActivity extends AppCompatActivity {
 		this.setContentView(R.layout.activity_login);
 		((BlinckApplication) getApplication()).getLoginComponent().inject(this);
 		AutoFinder.find(this);
+
 
 		this.connection_attempt_numb = 0;
 		tryToConnect();

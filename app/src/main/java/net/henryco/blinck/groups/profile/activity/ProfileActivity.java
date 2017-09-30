@@ -1,5 +1,6 @@
 package net.henryco.blinck.groups.profile.activity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -27,6 +28,7 @@ import javax.inject.Inject;
 
 public class ProfileActivity extends AppCompatActivity {
 
+	private static final int CODE_ACTIVITY_EDIT = 2;
 
 
 	@AutoFind(R.id.toolbar)
@@ -79,9 +81,11 @@ public class ProfileActivity extends AppCompatActivity {
 
 	private void initFab() {
 
-		fab.setOnClickListener(v -> {
-			// TODO: 30/09/17
-		});
+		fab.setOnClickListener(v -> startActivityForResult(
+				new Intent(this, EditProfileActivity.class),
+				CODE_ACTIVITY_EDIT
+		));
+		fab.setEnabled(false);
 	}
 
 
@@ -121,6 +125,7 @@ public class ProfileActivity extends AppCompatActivity {
 			collapsingToolbarLayout.setTitle(Helper.createTitle(name, age));
 			collapsingToolbarLayout.setVisibility(View.VISIBLE);
 			collapsingToolbarLayout.setEnabled(true);
+			fab.setEnabled(true);
 
 			((TextView) findViewById(R.id.text_name)).setText(nameFull);
 			((TextView) findViewById(R.id.text_gender)).setText(gender);
@@ -155,6 +160,13 @@ public class ProfileActivity extends AppCompatActivity {
 	}
 
 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
+		if (requestCode == CODE_ACTIVITY_EDIT)
+			if (resultCode == RESULT_OK) initUserProfile();
+	}
 
 
 	@Override
@@ -175,7 +187,6 @@ public class ProfileActivity extends AppCompatActivity {
 		setResult(RESULT_OK);
 		finish();
 	}
-
 
 }
 
