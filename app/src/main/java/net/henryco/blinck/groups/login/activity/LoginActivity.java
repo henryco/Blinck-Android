@@ -30,6 +30,8 @@ import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
+	private static final String LOG_D_LOGIN = "Login";
+
 	private static final int CONNECTION_ATTEMPTS_MAX_NUMB = 5;
 	private volatile int connection_attempt_numb;
 
@@ -45,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
 	private final BlinckBiConsumer<Call<List<String>>, Response<List<String>>>
 			onResponse = (listCall, listResponse) -> {
 
+		Log.d(LOG_D_LOGIN, "Get facebook permissions");
 		final List<String> list = listResponse.body();
 		onGetPermissionsSuccess_1(list == null
 				? new String[] {
@@ -88,6 +91,7 @@ public class LoginActivity extends AppCompatActivity {
 
 	private void tryToConnect() {
 
+		Log.d(LOG_D_LOGIN, "Attempting to connect: " + connection_attempt_numb);
 		if (connection_attempt_numb++ < CONNECTION_ATTEMPTS_MAX_NUMB) {
 
 			loginService.getRequiredFacebookPermissionsList().enqueue(
@@ -98,6 +102,7 @@ public class LoginActivity extends AppCompatActivity {
 
 		} else {
 			Toast.makeText(this, "Looks like there is connection troubles", Toast.LENGTH_LONG).show();
+			Log.i("Connection", "Connection error");
 			tryToEnterToMainPage();
 		}
 	}
@@ -106,6 +111,8 @@ public class LoginActivity extends AppCompatActivity {
 
 
 	private void onGetPermissionsSuccess_1(String ... permissions) {
+
+		Log.d(LOG_D_LOGIN, "Get permissions succeed");
 
 		final AccessToken accessToken = AccessToken.getCurrentAccessToken();
 		loginButton.setReadPermissions(permissions);
@@ -127,7 +134,7 @@ public class LoginActivity extends AppCompatActivity {
 
 	private void onFacebookAuthSuccess_2(AccessToken accessToken) {
 
-
+		Log.d(LOG_D_LOGIN, "Facebook authorization succeed");
 		Authorization authorization = Authorization.get(this);
 		if (authorization.exists()) {
 
@@ -147,6 +154,7 @@ public class LoginActivity extends AppCompatActivity {
 
 	private void getForAppAuthentication(AccessToken accessToken) {
 
+		Log.d(LOG_D_LOGIN, "Get application authorization");
 		loginService.postLoginForm(
 				new UserLoginForm(accessToken.getUserId(), accessToken.getToken())
 
@@ -163,18 +171,24 @@ public class LoginActivity extends AppCompatActivity {
 
 	private void onAppAuthSuccess_3(String app_token) {
 
+		Log.d(LOG_D_LOGIN, "Application authorization succeed");
+
 		loginService.getUserStatus(app_token).enqueue(new RetroCallback<>((call, response) -> {
 
 			UserStatusForm status = response.body();
 			if (status == null) {
+
+				Log.d(LOG_D_LOGIN, "Application authorization status: NULL");
 				tryToConnect();
 
 			} else if (status.getActive()) {
 				onGetStatusSuccess_4(status.getPrincipal(), app_token);
 
 			} else {
+
 				facebookLoginBroker.reset();
 				Authorization.reset(this);
+				Log.d(LOG_D_LOGIN, "Application authorization status: FAIL");
 				tryToConnect();
 			}
 
@@ -186,6 +200,7 @@ public class LoginActivity extends AppCompatActivity {
 
 	private void onGetStatusSuccess_4(String userId, String app_token) {
 
+		Log.d(LOG_D_LOGIN, "Application authorization status: OK");
 		Authorization.save(this, userId, app_token);
 		tryToEnterToMainPage();
 	}
@@ -196,10 +211,12 @@ public class LoginActivity extends AppCompatActivity {
 	private void tryToEnterToMainPage() {
 
 		if (Authorization.exists(this)) {
+			Log.d(LOG_D_LOGIN, "Authorization finished");
 			startActivity(new Intent(this, MainPageActivity.class));
 			finish();
 		} else {
 			Log.i("Connection", "Connection error");
+			Log.d(LOG_D_LOGIN, "Application authorization status: NULL");
 			// TODO: 29/09/17 SHOW CONNECTION ERROR VIEW
 		}
 	}
