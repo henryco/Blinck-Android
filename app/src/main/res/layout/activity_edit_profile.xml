@@ -82,7 +82,7 @@
 						android:orientation="vertical"
 						android:layout_width="match_parent"
 						android:layout_height="match_parent" android:layout_marginTop="@dimen/appbar_padding_top"
-						android:visibility="gone">
+				>
 					<TextView
 							android:text="First name"
 							android:layout_width="match_parent"
@@ -115,7 +115,7 @@
 						android:orientation="vertical"
 						android:layout_width="match_parent"
 						android:layout_height="match_parent" android:layout_marginTop="@dimen/activity_vertical_margin"
-						android:visibility="gone">
+				>
 					<TextView
 							android:text="Second name"
 							android:layout_width="match_parent"
@@ -148,7 +148,7 @@
 						android:orientation="vertical"
 						android:layout_width="match_parent"
 						android:layout_height="match_parent" android:layout_marginTop="@dimen/activity_vertical_margin"
-						android:visibility="gone">
+				>
 					<TextView
 							android:text="Last name"
 							android:layout_width="match_parent"
@@ -181,7 +181,7 @@
 						android:orientation="vertical"
 						android:layout_width="match_parent"
 						android:layout_height="match_parent" android:layout_marginTop="@dimen/activity_vertical_margin"
-						android:visibility="gone">
+				>
 					<TextView
 							android:text="Birthday"
 							android:layout_width="match_parent"
@@ -210,12 +210,11 @@
 				</LinearLayout>
 				
 				
-				
-				
 				<LinearLayout
 						android:orientation="vertical"
 						android:layout_width="match_parent"
-						android:layout_height="match_parent" android:layout_marginTop="@dimen/activity_vertical_margin">
+						android:layout_height="match_parent" android:layout_marginTop="@dimen/activity_vertical_margin"
+				>
 					<TextView
 							android:text="Gender"
 							android:layout_width="match_parent"
@@ -242,9 +241,70 @@
 				</LinearLayout>
 				
 				
+				<LinearLayout
+						android:orientation="vertical"
+						android:layout_width="match_parent"
+						android:layout_height="match_parent" android:layout_marginTop="@dimen/activity_vertical_margin"
+						android:layout_marginBottom="@dimen/activity_vertical_margin">
+					<TextView
+							android:text="About"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content" android:id="@+id/title_about"
+							android:textStyle="bold"
+							android:layout_margin="@dimen/com_facebook_auth_dialog_corner_radius_oversized"/>
+					<LinearLayout
+							android:orientation="vertical"
+							android:layout_width="match_parent"
+							android:layout_height="match_parent"
+							android:background="@color/cardview_light_background">
+						
+						<EditText
+								android:layout_width="match_parent"
+								android:layout_height="wrap_content"
+								android:inputType="textMultiLine"
+								android:ems="10"
+								android:id="@+id/about"
+								android:background="@color/cardview_light_background"
+								android:layout_margin="@dimen/appbar_padding_top"/>
+					</LinearLayout>
+				</LinearLayout>
 				
 				
-				
+				<LinearLayout
+						android:orientation="vertical"
+						android:layout_width="match_parent"
+						android:layout_height="match_parent" android:layout_marginTop="@dimen/activity_vertical_margin"
+				>
+					<TextView
+							android:text="Username"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content" android:id="@+id/title_nickname"
+							android:textStyle="bold"
+							android:layout_margin="@dimen/com_facebook_auth_dialog_corner_radius_oversized"/>
+					<LinearLayout
+							android:orientation="horizontal"
+							android:layout_width="match_parent"
+							android:layout_height="match_parent"
+							android:background="@color/cardview_light_background">
+						<EditText
+								android:layout_width="0dp"
+								android:layout_height="wrap_content"
+								android:inputType="textPersonName"
+								android:ems="10"
+								android:id="@+id/nickname" android:layout_weight="1"
+								android:singleLine="false" android:selectAllOnFocus="false"
+								android:background="@color/cardview_light_background"
+								android:layout_margin="@dimen/appbar_padding_top"
+								android:focusable="true"
+								android:focusableInTouchMode="true"
+								android:cursorVisible="true"/>
+					</LinearLayout>
+				</LinearLayout>
+				<Space
+						android:layout_width="match_parent"
+						android:layout_height="@dimen/com_facebook_profilepictureview_preset_size_normal"/>
+			
+			
 			</LinearLayout>
 		</LinearLayout>
 	
