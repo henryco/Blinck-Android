@@ -56,20 +56,34 @@
 				android:orientation="vertical"
 				android:layout_width="0px"
 				android:layout_height="match_parent" android:layout_weight="1"
-				android:layout_margin="@dimen/appbar_padding_top">
+		>
 			<ImageView
 					android:layout_width="match_parent"
 					android:layout_height="0px" app:srcCompat="@color/colorAccent" android:id="@+id/imageView8"
-					android:layout_marginBottom="@dimen/appbar_padding_top" android:layout_weight="1"/>
+					android:layout_marginBottom="@dimen/appbar_padding_top" android:layout_weight="1"
+					android:layout_marginEnd="@dimen/appbar_padding_top"
+					android:layout_marginLeft="@dimen/appbar_padding_top"
+					android:layout_marginRight="@dimen/appbar_padding_top"
+					android:layout_marginStart="@dimen/appbar_padding_top"
+					android:layout_marginTop="@dimen/appbar_padding_top"/>
 			<ImageView
 					android:layout_width="match_parent"
 					android:layout_height="0px"
 					app:srcCompat="@color/com_facebook_button_background_color_selected" android:id="@+id/imageView10"
-					android:layout_marginBottom="@dimen/appbar_padding_top" android:layout_weight="1"/>
+					android:layout_marginBottom="@dimen/appbar_padding_top" android:layout_weight="1"
+					android:layout_marginEnd="@dimen/appbar_padding_top"
+					android:layout_marginLeft="@dimen/appbar_padding_top"
+					android:layout_marginRight="@dimen/appbar_padding_top"
+					android:layout_marginStart="@dimen/appbar_padding_top"/>
 			<ImageView
 					android:layout_width="match_parent"
 					android:layout_height="0px" app:srcCompat="@color/colorPrimaryDark"
-					android:id="@+id/imageView9" android:layout_weight="1"/>
+					android:id="@+id/imageView9" android:layout_weight="1"
+					android:layout_marginBottom="@dimen/appbar_padding_top"
+					android:layout_marginEnd="@dimen/appbar_padding_top"
+					android:layout_marginLeft="@dimen/appbar_padding_top"
+					android:layout_marginRight="@dimen/appbar_padding_top"
+					android:layout_marginStart="@dimen/appbar_padding_top"/>
 		</LinearLayout>
 	</LinearLayout>
 	
