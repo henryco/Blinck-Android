@@ -228,13 +228,13 @@
 							android:background="@color/cardview_light_background">
 						<RadioButton
 								android:text="Male"
-								android:layout_width="wrap_content"
+								android:layout_width="match_parent"
 								android:layout_height="wrap_content" android:id="@+id/radio_male"
 								android:layout_margin="@dimen/appbar_padding_top"
 						/>
 						<RadioButton
 								android:text="Female"
-								android:layout_width="wrap_content"
+								android:layout_width="match_parent"
 								android:layout_height="wrap_content" android:id="@+id/radio_female"
 								android:layout_margin="@dimen/appbar_padding_top"/>
 					</LinearLayout>
