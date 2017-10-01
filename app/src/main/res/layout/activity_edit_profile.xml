@@ -50,7 +50,7 @@
 				android:layout_margin="@dimen/appbar_padding_top" android:id="@+id/container_avatar">
 			<ImageView
 					android:layout_width="match_parent"
-					android:layout_height="200dp" app:srcCompat="@color/cardview_dark_background"
+					android:layout_height="230dp" app:srcCompat="@color/cardview_dark_background"
 					android:id="@+id/image_avatar"/>
 		</LinearLayout>
 		<LinearLayout
