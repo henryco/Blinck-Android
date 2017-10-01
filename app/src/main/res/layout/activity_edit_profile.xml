@@ -11,7 +11,8 @@
 	<LinearLayout
 			android:orientation="horizontal"
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content" android:layout_margin="@dimen/activity_vertical_margin">
+			android:layout_height="wrap_content" android:layout_margin="@dimen/activity_vertical_margin"
+			android:id="@+id/top_container">
 		
 		
 		<!--<ImageView-->
@@ -46,20 +47,21 @@
 				android:orientation="horizontal"
 				android:layout_width="0px"
 				android:layout_height="wrap_content" android:layout_weight="3"
-				android:layout_margin="@dimen/appbar_padding_top">
+				android:layout_margin="@dimen/appbar_padding_top" android:id="@+id/container_avatar">
 			<ImageView
 					android:layout_width="match_parent"
 					android:layout_height="200dp" app:srcCompat="@color/cardview_dark_background"
-					android:id="@+id/imageView5"/>
+					android:id="@+id/image_avatar"/>
 		</LinearLayout>
 		<LinearLayout
 				android:orientation="vertical"
 				android:layout_width="0px"
 				android:layout_height="match_parent" android:layout_weight="1"
-		>
+				android:id="@+id/container_images">
 			<ImageView
 					android:layout_width="match_parent"
-					android:layout_height="0px" app:srcCompat="@color/colorAccent" android:id="@+id/imageView8"
+					android:layout_height="0px" app:srcCompat="@color/cardview_dark_background"
+					android:id="@+id/image_1"
 					android:layout_marginBottom="@dimen/appbar_padding_top" android:layout_weight="1"
 					android:layout_marginEnd="@dimen/appbar_padding_top"
 					android:layout_marginLeft="@dimen/appbar_padding_top"
@@ -69,7 +71,7 @@
 			<ImageView
 					android:layout_width="match_parent"
 					android:layout_height="0px"
-					app:srcCompat="@color/com_facebook_button_background_color_selected" android:id="@+id/imageView10"
+					app:srcCompat="@color/cardview_dark_background" android:id="@+id/image_2"
 					android:layout_marginBottom="@dimen/appbar_padding_top" android:layout_weight="1"
 					android:layout_marginEnd="@dimen/appbar_padding_top"
 					android:layout_marginLeft="@dimen/appbar_padding_top"
@@ -77,8 +79,8 @@
 					android:layout_marginStart="@dimen/appbar_padding_top"/>
 			<ImageView
 					android:layout_width="match_parent"
-					android:layout_height="0px" app:srcCompat="@color/colorPrimaryDark"
-					android:id="@+id/imageView9" android:layout_weight="1"
+					android:layout_height="0px" app:srcCompat="@color/cardview_dark_background"
+					android:id="@+id/image_3" android:layout_weight="1"
 					android:layout_marginBottom="@dimen/appbar_padding_top"
 					android:layout_marginEnd="@dimen/appbar_padding_top"
 					android:layout_marginLeft="@dimen/appbar_padding_top"
@@ -91,7 +93,7 @@
 	<LinearLayout
 			android:orientation="vertical"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent">
+			android:layout_height="match_parent" android:id="@+id/bot_container">
 	</LinearLayout>
 
 
