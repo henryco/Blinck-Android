@@ -1,6 +1,7 @@
 package net.henryco.blinck.groups.profile.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -96,13 +97,31 @@ public class EditProfileActivity extends AppCompatActivity {
 
 	private void initImages(Authorization auth) {
 
+		final ImageView[] images = {image1, image2, image3};
+
 		mediaMainService.loadProfileAvatarFromCache(this, auth,
 				bitmap -> runOnUiThread(
 						() -> imageAvatar.setImageBitmap(bitmap))
 		);
 
-		// TODO: 01/10/17
+		imageAvatar.setOnClickListener(v -> {
+			// TODO: 01/10/17 upload avatar
+		});
+
+		for (int i = 0; i < images.length; i++) {
+
+			val image = images[i];
+			val ref = i;
+
+			if (image != null) {
+
+				image.setOnClickListener(v -> {
+					// TODO: 01/10/17 upload image
+				});
+			}
+		}
 	}
+
 
 
 	private void initProfile(Authorization auth) {
@@ -172,8 +191,11 @@ public class EditProfileActivity extends AppCompatActivity {
 	public void onBackPressed() {
 
 		updateUserProfile();
-		setResult(RESULT_OK);
-		finish();
+		new Handler().postDelayed(()
+				-> runOnUiThread(() -> {
+			setResult(RESULT_OK);
+			finish();
+		}), 400);
 	}
 
 
@@ -210,9 +232,8 @@ public class EditProfileActivity extends AppCompatActivity {
 			form.setGender(ProfileHelper.GENDER_FEMALE);
 		else form.setGender(ProfileHelper.GENDER_MALE);
 
-		Log.d("Profile Edit", "Updating: "+form);
-		profileUpdateService.updateProfile(auth, form, status -> {
-			Log.d("Profile Edit", "Status OK");
-		});
+		profileUpdateService.updateProfile(auth, form, status
+				-> Log.d("Profile Edit", "Status OK")
+		);
 	}
 }
