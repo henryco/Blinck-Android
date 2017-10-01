@@ -1,16 +1,18 @@
 package net.henryco.blinck.groups.profile.activity;
 
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import lombok.val;
 import net.henryco.blinck.BlinckApplication;
 import net.henryco.blinck.R;
+import net.henryco.blinck.service.MediaMainService;
 import net.henryco.blinck.service.ProfileMainService;
 import net.henryco.blinck.service.ProfileUpdateService;
 import net.henryco.blinck.util.Authorization;
-import net.henryco.blinck.util.form.user.UserProfileForm;
 import net.henryco.blinck.util.reflect.AutoFind;
 import net.henryco.blinck.util.reflect.AutoFinder;
 
@@ -19,8 +21,25 @@ import javax.inject.Inject;
 public class EditProfileActivity extends AppCompatActivity {
 
 
+	@AutoFind(R.id.image_avatar)
+	private ImageView imageAvatar;
+
+	@AutoFind(R.id.image_1)
+	private ImageView image1;
+
+	@AutoFind(R.id.image_2)
+	private ImageView image2;
+
+	@AutoFind(R.id.image_3)
+	private ImageView image3;
+
+
+
 	@Inject ProfileUpdateService profileUpdateService;
 	@Inject ProfileMainService profileMainService;
+
+	@Inject MediaMainService mediaMainService;
+
 
 
 	@Override
@@ -32,13 +51,13 @@ public class EditProfileActivity extends AppCompatActivity {
 
 		((BlinckApplication) getApplication()).getProfileComponent().inject(this);
 
+		val authorization = Authorization.get(this);
+
 		initActionBar();
+		initImages(authorization);
+		initProfile(authorization);
 
-		Authorization authorization = Authorization.get(this);
 //		UserProfileForm profileForm = profileMainService.getProfileFromCache(authorization.getUid());
-//
-//		System.out.println(profileForm);
-
 	}
 
 
@@ -51,6 +70,25 @@ public class EditProfileActivity extends AppCompatActivity {
 		}
 	}
 
+
+	private void initImages(Authorization auth) {
+
+		mediaMainService.loadProfileAvatarFromCache(this, auth,
+				bitmap -> runOnUiThread(
+						() -> imageAvatar.setImageBitmap(bitmap))
+		);
+
+		// TODO: 01/10/17
+	}
+
+
+	private void initProfile(Authorization auth) {
+
+		val profileForm = profileMainService.getProfileFromCache(auth.getUid());
+		Log.d("Profile", profileForm.toString());
+
+		// TODO: 01/10/17
+	}
 
 	@Override
 	public void onBackPressed() {

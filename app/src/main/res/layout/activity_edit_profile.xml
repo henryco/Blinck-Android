@@ -15,45 +15,20 @@
 			android:id="@+id/top_container">
 		
 		
-		<!--<ImageView-->
-		<!--android:layout_height="250dp" app:srcCompat="@color/cardview_dark_background"-->
-		<!--android:id="@+id/imageView" android:layout_width="250dp"/>-->
-		<!--<LinearLayout-->
-		<!--android:orientation="vertical"-->
-		<!--android:layout_width="match_parent"-->
-		<!--android:layout_height="match_parent">-->
-		<!--<ImageView-->
-		<!--android:layout_width="75dp"-->
-		<!--android:layout_height="75dp" app:srcCompat="@color/cardview_dark_background"-->
-		<!--android:id="@+id/imageView4" android:layout_marginEnd="@dimen/appbar_padding_top"-->
-		<!--android:layout_marginLeft="@dimen/appbar_padding_top"-->
-		<!--android:layout_marginRight="@dimen/appbar_padding_top"-->
-		<!--android:layout_marginStart="@dimen/appbar_padding_top"/>-->
-		<!--<ImageView-->
-		<!--android:layout_width="75dp"-->
-		<!--android:layout_height="75dp" app:srcCompat="@color/cardview_dark_background"-->
-		<!--android:id="@+id/imageView3" android:layout_margin="@dimen/appbar_padding_top"/>-->
-		<!--<ImageView-->
-		<!--android:layout_width="75dp"-->
-		<!--android:layout_height="75dp" app:srcCompat="@color/cardview_dark_background"-->
-		<!--android:id="@+id/imageView2" android:layout_marginEnd="@dimen/appbar_padding_top"-->
-		<!--android:layout_marginLeft="@dimen/appbar_padding_top"-->
-		<!--android:layout_marginRight="@dimen/appbar_padding_top"-->
-		<!--android:layout_marginStart="@dimen/appbar_padding_top"/>-->
-		<!--</LinearLayout>-->
-		
-		
 		<LinearLayout
 				android:orientation="horizontal"
 				android:layout_width="0px"
 				android:layout_height="wrap_content" android:layout_weight="3"
-				android:layout_margin="@dimen/appbar_padding_top" android:id="@+id/container_avatar">
-			<ImageView
+				android:id="@+id/container_avatar"
+		>
+			<net.henryco.blinck.util.view.SquareImageView
 					android:layout_width="match_parent"
 					android:layout_height="230dp" app:srcCompat="@color/colorPrimary"
 					android:id="@+id/image_avatar" android:scaleType="centerCrop"
-					android:background="@color/colorPrimary"/>
+					android:background="@color/colorPrimary"
+					android:layout_margin="@dimen/appbar_padding_top"/>
 		</LinearLayout>
+		
 		<LinearLayout
 				android:orientation="vertical"
 				android:layout_width="0px"
@@ -63,33 +38,24 @@
 					android:layout_width="match_parent"
 					android:layout_height="0px" app:srcCompat="@color/colorPrimary"
 					android:id="@+id/image_1"
-					android:layout_marginBottom="@dimen/appbar_padding_top" android:layout_weight="1"
-					android:layout_marginEnd="@dimen/appbar_padding_top"
-					android:layout_marginLeft="@dimen/appbar_padding_top"
-					android:layout_marginRight="@dimen/appbar_padding_top"
-					android:layout_marginStart="@dimen/appbar_padding_top"
-					android:layout_marginTop="@dimen/appbar_padding_top" android:scaleType="centerCrop"
-					android:background="@color/colorPrimary"/>
+					android:layout_weight="1"
+					android:scaleType="centerCrop"
+					android:background="@color/colorPrimary" android:layout_margin="@dimen/appbar_padding_top"/>
 			<ImageView
 					android:layout_width="match_parent"
 					android:layout_height="0px"
 					app:srcCompat="@color/colorPrimary" android:id="@+id/image_2"
-					android:layout_marginBottom="@dimen/appbar_padding_top" android:layout_weight="1"
-					android:layout_marginEnd="@dimen/appbar_padding_top"
-					android:layout_marginLeft="@dimen/appbar_padding_top"
-					android:layout_marginRight="@dimen/appbar_padding_top"
-					android:layout_marginStart="@dimen/appbar_padding_top" android:scaleType="centerCrop"
-					android:background="@color/colorPrimary"/>
+					android:layout_weight="1"
+					android:scaleType="centerCrop"
+					android:background="@color/colorPrimary"
+					android:layout_margin="@dimen/appbar_padding_top"/>
 			<ImageView
 					android:layout_width="match_parent"
 					android:layout_height="0px" app:srcCompat="@color/colorPrimary"
 					android:id="@+id/image_3" android:layout_weight="1"
-					android:layout_marginBottom="@dimen/appbar_padding_top"
-					android:layout_marginEnd="@dimen/appbar_padding_top"
-					android:layout_marginLeft="@dimen/appbar_padding_top"
-					android:layout_marginRight="@dimen/appbar_padding_top"
-					android:layout_marginStart="@dimen/appbar_padding_top" android:scaleType="centerCrop"
-					android:background="@color/colorPrimary"/>
+					android:scaleType="centerCrop"
+					android:background="@color/colorPrimary"
+					android:layout_margin="@dimen/appbar_padding_top"/>
 		</LinearLayout>
 	</LinearLayout>
 	

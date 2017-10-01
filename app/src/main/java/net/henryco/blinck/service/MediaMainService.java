@@ -59,13 +59,22 @@ public class MediaMainService {
 	}
 
 
+	public void loadProfileAvatarFromCache(Context context,
+	                                       Authorization authorization,
+	                                       BlinckConsumer<Bitmap> bitmapConsumer) {
+
+		Bitmap image = Helper.loadBitmapFromFile(context, authorization.getUid().toString());
+		if (image != null) bitmapConsumer.consume(image);
+	}
+
 
 	public void loadAndCacheProfileAvatarImage(Context context,
 	                                           Authorization authorization,
 	                                           BlinckConsumer<Bitmap> bitmapConsumer) {
 
-		Bitmap image = Helper.loadBitmapFromFile(context, authorization.getUid().toString());
-		if (image != null) bitmapConsumer.consume(image);
+		loadProfileAvatarFromCache(context, authorization, bitmapConsumer);
+//		Bitmap image = Helper.loadBitmapFromFile(context, authorization.getUid().toString());
+//		if (image != null) bitmapConsumer.consume(image);
 
 		loadProfileAvatarImage(authorization, bitmap -> {
 
