@@ -41,6 +41,6 @@ final class ProfileHelper {
 
 
 	static String safetyString(String string) {
-		return string == null ? "" : string;
+		return string == null ? "" : string.trim();
 	}
 }

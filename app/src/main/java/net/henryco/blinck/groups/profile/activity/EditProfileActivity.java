@@ -1,5 +1,6 @@
 package net.henryco.blinck.groups.profile.activity;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
@@ -8,9 +9,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.RadioButton;
+import android.widget.*;
 import lombok.val;
 import net.henryco.blinck.BlinckApplication;
 import net.henryco.blinck.R;
@@ -22,6 +21,7 @@ import net.henryco.blinck.util.form.user.UserNameForm;
 import net.henryco.blinck.util.form.user.UserProfileForm;
 import net.henryco.blinck.util.reflect.AutoFind;
 import net.henryco.blinck.util.reflect.AutoFinder;
+import org.joda.time.LocalDate;
 
 import javax.inject.Inject;
 
@@ -59,7 +59,7 @@ public class EditProfileActivity extends AppCompatActivity {
 	@AutoFind(R.id.nickname)
 	private EditText nick;
 
-
+	private String nickname;
 
 	@Inject ProfileUpdateService profileUpdateService;
 	@Inject ProfileMainService profileMainService;
@@ -144,9 +144,21 @@ public class EditProfileActivity extends AppCompatActivity {
 	private void initBirthdayField(Long date) {
 
 		birthday.setText(ProfileHelper.createBirthday(date));
-		birthday.setOnClickListener(v -> {
-			// TODO: 01/10/17 date picker dialog
-		});
+
+		DatePickerDialog.OnDateSetListener listener = (view, year, month, dayOfMonth) -> {
+
+			LocalDate newBirthday = new LocalDate(year, month + 1, dayOfMonth);
+			birthday.setText(ProfileHelper.createBirthday(newBirthday.toDate().getTime()));
+		};
+
+		val local = new LocalDate(date);
+		birthday.setOnClickListener(v ->
+				new DatePickerDialog(this, listener,
+						local.getYear(),
+						local.getMonthOfYear() - 1,
+						local.getDayOfMonth()
+				).show()
+		);
 	}
 
 
@@ -164,8 +176,12 @@ public class EditProfileActivity extends AppCompatActivity {
 
 	private void initUsernameField(String username) {
 
-		nick.setText(ProfileHelper.safetyString(username));
+		nickname = ProfileHelper.safetyString(username);
+		nick.setText(nickname);
 		nick.addTextChangedListener(new TextWatcher() {
+
+
+
 
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -180,6 +196,7 @@ public class EditProfileActivity extends AppCompatActivity {
 			@Override
 			public void afterTextChanged(Editable s) {
 
+				Log.d("nickname", "updating: " +s.toString());
 			}
 		});
 	}
@@ -193,6 +210,7 @@ public class EditProfileActivity extends AppCompatActivity {
 		updateUserProfile();
 		new Handler().postDelayed(()
 				-> runOnUiThread(() -> {
+			Toast.makeText(this, "Updating might take few seconds", Toast.LENGTH_LONG).show();
 			setResult(RESULT_OK);
 			finish();
 		}), 400);
@@ -222,7 +240,7 @@ public class EditProfileActivity extends AppCompatActivity {
 		nameForm.setFirstName(firstName.getText().toString());
 		nameForm.setSecondName(secondName.getText().toString());
 		nameForm.setLastName(lastName.getText().toString());
-		nameForm.setNickname(nick.getText().toString());
+		nameForm.setNickname(nickname);
 
 		form.setAbout(about.getText().toString());
 		form.setBirthday(ProfileHelper.getBirthday(birthday.getText().toString()));
