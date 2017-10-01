@@ -73,9 +73,6 @@ public class MediaMainService {
 	                                           BlinckConsumer<Bitmap> bitmapConsumer) {
 
 		loadProfileAvatarFromCache(context, authorization, bitmapConsumer);
-//		Bitmap image = Helper.loadBitmapFromFile(context, authorization.getUid().toString());
-//		if (image != null) bitmapConsumer.consume(image);
-
 		loadProfileAvatarImage(authorization, bitmap -> {
 
 			bitmapConsumer.consume(bitmap);

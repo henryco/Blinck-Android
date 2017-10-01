@@ -5,65 +5,73 @@
 		xmlns:app="http://schemas.android.com/apk/res-auto"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		tools:context="net.henryco.blinck.groups.profile.activity.EditProfileActivity">
-	
-	
-	<LinearLayout
-			android:orientation="horizontal"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content" android:layout_margin="@dimen/activity_vertical_margin"
-			android:id="@+id/top_container">
-		
-		
-		<LinearLayout
-				android:orientation="horizontal"
-				android:layout_width="0px"
-				android:layout_height="wrap_content" android:layout_weight="3"
-				android:id="@+id/container_avatar"
-		>
-			<net.henryco.blinck.util.view.SquareImageView
-					android:layout_width="match_parent"
-					android:layout_height="230dp" app:srcCompat="@color/colorPrimary"
-					android:id="@+id/image_avatar" android:scaleType="centerCrop"
-					android:background="@color/colorPrimary"
-					android:layout_margin="@dimen/appbar_padding_top"/>
-		</LinearLayout>
-		
-		<LinearLayout
-				android:orientation="vertical"
-				android:layout_width="0px"
-				android:layout_height="match_parent" android:layout_weight="1"
-				android:id="@+id/container_images">
-			<ImageView
-					android:layout_width="match_parent"
-					android:layout_height="0px" app:srcCompat="@color/colorPrimary"
-					android:id="@+id/image_1"
-					android:layout_weight="1"
-					android:scaleType="centerCrop"
-					android:background="@color/colorPrimary" android:layout_margin="@dimen/appbar_padding_top"/>
-			<ImageView
-					android:layout_width="match_parent"
-					android:layout_height="0px"
-					app:srcCompat="@color/colorPrimary" android:id="@+id/image_2"
-					android:layout_weight="1"
-					android:scaleType="centerCrop"
-					android:background="@color/colorPrimary"
-					android:layout_margin="@dimen/appbar_padding_top"/>
-			<ImageView
-					android:layout_width="match_parent"
-					android:layout_height="0px" app:srcCompat="@color/colorPrimary"
-					android:id="@+id/image_3" android:layout_weight="1"
-					android:scaleType="centerCrop"
-					android:background="@color/colorPrimary"
-					android:layout_margin="@dimen/appbar_padding_top"/>
-		</LinearLayout>
-	</LinearLayout>
+		tools:context="net.henryco.blinck.groups.profile.activity.EditProfileActivity"
+		android:background="@color/colorProfileEdit">
 	
 	
 	<LinearLayout
 			android:orientation="vertical"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent" android:id="@+id/bot_container">
+			android:layout_height="match_parent" android:layout_margin="16dp" android:id="@+id/container_super">
+		<LinearLayout
+				android:orientation="horizontal"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:id="@+id/top_container">
+			
+			
+			<LinearLayout
+					android:orientation="horizontal"
+					android:layout_width="0px"
+					android:layout_height="wrap_content" android:layout_weight="3"
+					android:id="@+id/container_avatar"
+			>
+				<net.henryco.blinck.util.view.SquareImageView
+						android:layout_width="match_parent"
+						android:layout_height="230dp" app:srcCompat="@mipmap/ic_add_white"
+						android:id="@+id/image_avatar" android:scaleType="centerCrop"
+						android:background="@color/colorPrimary"
+						android:layout_margin="@dimen/appbar_padding_top"/>
+			</LinearLayout>
+			
+			<LinearLayout
+					android:orientation="vertical"
+					android:layout_width="0px"
+					android:layout_height="match_parent" android:layout_weight="1"
+					android:id="@+id/container_images">
+				<ImageView
+						android:layout_width="match_parent"
+						android:layout_height="0px" app:srcCompat="@mipmap/ic_add_white"
+						android:id="@+id/image_1"
+						android:layout_weight="1"
+						android:scaleType="center"
+						android:background="@color/colorPrimary" android:layout_margin="@dimen/appbar_padding_top"/>
+				<ImageView
+						android:layout_width="match_parent"
+						android:layout_height="0px"
+						app:srcCompat="@mipmap/ic_add_white" android:id="@+id/image_2"
+						android:layout_weight="1"
+						android:scaleType="center"
+						android:background="@color/colorPrimary"
+						android:layout_margin="@dimen/appbar_padding_top"/>
+				<ImageView
+						android:layout_width="match_parent"
+						android:layout_height="0px" app:srcCompat="@mipmap/ic_add_white"
+						android:id="@+id/image_3" android:layout_weight="1"
+						android:scaleType="center"
+						android:background="@color/colorPrimary"
+						android:layout_margin="@dimen/appbar_padding_top"/>
+			</LinearLayout>
+		</LinearLayout>
+		
+		<LinearLayout
+				android:orientation="vertical"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content" android:id="@+id/bot_container"
+				android:layout_marginTop="@dimen/activity_vertical_margin">
+		</LinearLayout>
+	
+	
 	</LinearLayout>
 
 

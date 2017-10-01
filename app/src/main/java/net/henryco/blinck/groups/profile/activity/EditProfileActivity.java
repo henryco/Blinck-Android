@@ -57,7 +57,6 @@ public class EditProfileActivity extends AppCompatActivity {
 		initImages(authorization);
 		initProfile(authorization);
 
-//		UserProfileForm profileForm = profileMainService.getProfileFromCache(authorization.getUid());
 	}
 
 
