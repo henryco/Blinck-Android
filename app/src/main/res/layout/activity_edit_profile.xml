@@ -50,8 +50,9 @@
 				android:layout_margin="@dimen/appbar_padding_top" android:id="@+id/container_avatar">
 			<ImageView
 					android:layout_width="match_parent"
-					android:layout_height="230dp" app:srcCompat="@color/cardview_dark_background"
-					android:id="@+id/image_avatar"/>
+					android:layout_height="230dp" app:srcCompat="@color/colorPrimary"
+					android:id="@+id/image_avatar" android:scaleType="centerCrop"
+					android:background="@color/colorPrimary"/>
 		</LinearLayout>
 		<LinearLayout
 				android:orientation="vertical"
@@ -60,32 +61,35 @@
 				android:id="@+id/container_images">
 			<ImageView
 					android:layout_width="match_parent"
-					android:layout_height="0px" app:srcCompat="@color/cardview_dark_background"
+					android:layout_height="0px" app:srcCompat="@color/colorPrimary"
 					android:id="@+id/image_1"
 					android:layout_marginBottom="@dimen/appbar_padding_top" android:layout_weight="1"
 					android:layout_marginEnd="@dimen/appbar_padding_top"
 					android:layout_marginLeft="@dimen/appbar_padding_top"
 					android:layout_marginRight="@dimen/appbar_padding_top"
 					android:layout_marginStart="@dimen/appbar_padding_top"
-					android:layout_marginTop="@dimen/appbar_padding_top"/>
+					android:layout_marginTop="@dimen/appbar_padding_top" android:scaleType="centerCrop"
+					android:background="@color/colorPrimary"/>
 			<ImageView
 					android:layout_width="match_parent"
 					android:layout_height="0px"
-					app:srcCompat="@color/cardview_dark_background" android:id="@+id/image_2"
+					app:srcCompat="@color/colorPrimary" android:id="@+id/image_2"
 					android:layout_marginBottom="@dimen/appbar_padding_top" android:layout_weight="1"
 					android:layout_marginEnd="@dimen/appbar_padding_top"
 					android:layout_marginLeft="@dimen/appbar_padding_top"
 					android:layout_marginRight="@dimen/appbar_padding_top"
-					android:layout_marginStart="@dimen/appbar_padding_top"/>
+					android:layout_marginStart="@dimen/appbar_padding_top" android:scaleType="centerCrop"
+					android:background="@color/colorPrimary"/>
 			<ImageView
 					android:layout_width="match_parent"
-					android:layout_height="0px" app:srcCompat="@color/cardview_dark_background"
+					android:layout_height="0px" app:srcCompat="@color/colorPrimary"
 					android:id="@+id/image_3" android:layout_weight="1"
 					android:layout_marginBottom="@dimen/appbar_padding_top"
 					android:layout_marginEnd="@dimen/appbar_padding_top"
 					android:layout_marginLeft="@dimen/appbar_padding_top"
 					android:layout_marginRight="@dimen/appbar_padding_top"
-					android:layout_marginStart="@dimen/appbar_padding_top"/>
+					android:layout_marginStart="@dimen/appbar_padding_top" android:scaleType="centerCrop"
+					android:background="@color/colorPrimary"/>
 		</LinearLayout>
 	</LinearLayout>
 	
