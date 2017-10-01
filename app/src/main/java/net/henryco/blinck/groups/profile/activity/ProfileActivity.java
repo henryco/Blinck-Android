@@ -22,7 +22,6 @@ import net.henryco.blinck.util.form.user.UserProfileForm;
 import net.henryco.blinck.util.reflect.AutoFind;
 import net.henryco.blinck.util.reflect.AutoFinder;
 import net.henryco.blinck.util.task.VoidAsyncTask;
-import org.joda.time.LocalDate;
 
 import javax.inject.Inject;
 
@@ -108,9 +107,9 @@ public class ProfileActivity extends AppCompatActivity {
 		final String name = profile.getUserName().getFirstName();
 		final int age = TimeUtils.calculateAgeFromBirthDate(profile.getBirthday());
 
-		final String gender = Helper.createGender(profile.getGender());
-		final String birthday = Helper.createBirthday(profile.getBirthday());
-		final String nameFull = Helper.createName(
+		final String gender = ProfileHelper.createGender(profile.getGender());
+		final String birthday = ProfileHelper.createBirthday(profile.getBirthday());
+		final String nameFull = ProfileHelper.createName(
 				profile.getUserName().getFirstName(),
 				profile.getUserName().getSecondName(),
 				profile.getUserName().getLastName()
@@ -122,7 +121,7 @@ public class ProfileActivity extends AppCompatActivity {
 
 		runOnUiThread(() -> {
 
-			collapsingToolbarLayout.setTitle(Helper.createTitle(name, age));
+			collapsingToolbarLayout.setTitle(ProfileHelper.createTitle(name, age));
 			collapsingToolbarLayout.setVisibility(View.VISIBLE);
 			collapsingToolbarLayout.setEnabled(true);
 			fab.setEnabled(true);
@@ -191,29 +190,3 @@ public class ProfileActivity extends AppCompatActivity {
 }
 
 
-final class Helper {
-
-	static String createTitle(String name, int age) {
-		return name + ",  " + age;
-	}
-
-	static String createName(String first, String second, String last) {
-
-		String s = second == null ? "" : (" " + second);
-		String l = last == null ? "" : (" " + last);
-		return first + s + l;
-	}
-
-	static String createGender(String gender) {
-
-		if (gender == null) return "";
-		if (gender.equalsIgnoreCase("male")) return "Male";
-		if (gender.equalsIgnoreCase("female")) return "Female";
-
-		return "Unknown";
-	}
-
-	static String createBirthday(long birthday) {
-		return new LocalDate(birthday).toString().replace("-", "/");
-	}
-}
