@@ -20,8 +20,10 @@ public final class RetroCallbackRaw<T> implements Callback<ResponseBody> {
 
 
 	private BlinckBiConsumer<Call<ResponseBody>, T> onResponseConsumer;
-	private BlinckBiConsumer<Call<ResponseBody>, Throwable> onFailureConsumer;
-	private Class<?> type;
+	private BlinckBiConsumer<Call<ResponseBody>, Throwable> onFailureConsumer =
+			(responseBodyCall, throwable) -> throwable.printStackTrace();
+
+	private Class<T> type;
 
 
 	public RetroCallbackRaw(Class<T> type, BlinckBiConsumer<Call<ResponseBody>, T> consumer) {

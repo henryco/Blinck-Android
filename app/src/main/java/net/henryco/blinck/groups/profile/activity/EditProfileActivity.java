@@ -17,6 +17,7 @@ import net.henryco.blinck.service.MediaMainService;
 import net.henryco.blinck.service.ProfileMainService;
 import net.henryco.blinck.service.ProfileUpdateService;
 import net.henryco.blinck.util.Authorization;
+import net.henryco.blinck.util.form.user.UserNameForm;
 import net.henryco.blinck.util.form.user.UserProfileForm;
 import net.henryco.blinck.util.reflect.AutoFind;
 import net.henryco.blinck.util.reflect.AutoFinder;
@@ -37,6 +38,25 @@ public class EditProfileActivity extends AppCompatActivity {
 
 	@AutoFind(R.id.image_3)
 	private ImageView image3;
+
+
+	@AutoFind(R.id.first_name)
+	private EditText firstName;
+
+	@AutoFind(R.id.second_name)
+	private EditText secondName;
+
+	@AutoFind(R.id.last_name)
+	private EditText lastName;
+
+	@AutoFind(R.id.about)
+	private EditText about;
+
+	@AutoFind(R.id.birthday)
+	private EditText birthday;
+
+	@AutoFind(R.id.nickname)
+	private EditText nick;
 
 
 
@@ -90,16 +110,9 @@ public class EditProfileActivity extends AppCompatActivity {
 		UserProfileForm form = profileMainService.getProfileFromCache(auth.getUid());
 		Log.d("Profile", form.toString());
 
-		val firstName = (EditText) findViewById(R.id.first_name);
 		firstName.setText(form.getUserName().getFirstName());
-
-		val secondName = (EditText) findViewById(R.id.second_name);
 		secondName.setText(ProfileHelper.safetyString(form.getUserName().getSecondName()));
-
-		val lastName = (EditText) findViewById(R.id.last_name);
 		lastName.setText(ProfileHelper.safetyString(form.getUserName().getLastName()));
-
-		val about = (EditText) findViewById(R.id.about);
 		about.setText(ProfileHelper.safetyString(form.getAbout()));
 
 		initBirthdayField(form.getBirthday());
@@ -111,7 +124,6 @@ public class EditProfileActivity extends AppCompatActivity {
 
 	private void initBirthdayField(Long date) {
 
-		val birthday = (EditText) findViewById(R.id.birthday);
 		birthday.setText(ProfileHelper.createBirthday(date));
 		birthday.setOnClickListener(v -> {
 			// TODO: 01/10/17 date picker dialog
@@ -133,9 +145,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
 	private void initUsernameField(String username) {
 
-		val nick = (EditText) findViewById(R.id.nickname);
 		nick.setText(ProfileHelper.safetyString(username));
-
 		nick.addTextChangedListener(new TextWatcher() {
 
 			@Override
@@ -161,7 +171,7 @@ public class EditProfileActivity extends AppCompatActivity {
 	@Override
 	public void onBackPressed() {
 
-		// TODO: 30/09/17 UPLOAD AND SAVE CHANGES
+		updateUserProfile();
 		setResult(RESULT_OK);
 		finish();
 	}
@@ -179,4 +189,30 @@ public class EditProfileActivity extends AppCompatActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
+
+
+	private void updateUserProfile() {
+
+		val auth = Authorization.get(this);
+		val form = new UserProfileForm();
+		val nameForm = new UserNameForm();
+
+		nameForm.setFirstName(firstName.getText().toString());
+		nameForm.setSecondName(secondName.getText().toString());
+		nameForm.setLastName(lastName.getText().toString());
+		nameForm.setNickname(nick.getText().toString());
+
+		form.setAbout(about.getText().toString());
+		form.setBirthday(ProfileHelper.getBirthday(birthday.getText().toString()));
+		form.setUserName(nameForm);
+
+		if (((RadioButton) findViewById(R.id.radio_female)).isChecked())
+			form.setGender(ProfileHelper.GENDER_FEMALE);
+		else form.setGender(ProfileHelper.GENDER_MALE);
+
+		Log.d("Profile Edit", "Updating: "+form);
+		profileUpdateService.updateProfile(auth, form, status -> {
+			Log.d("Profile Edit", "Status OK");
+		});
+	}
 }

@@ -7,8 +7,8 @@ import org.joda.time.LocalDate;
  */
 final class ProfileHelper {
 
-	public static final String GENDER_MALE = "male";
-	public static final String GENDER_FEMALE = "female";
+	static final String GENDER_MALE = "male";
+	static final String GENDER_FEMALE = "female";
 
 
 	static String createTitle(String name, int age) {
@@ -35,6 +35,9 @@ final class ProfileHelper {
 		return new LocalDate(birthday).toString().replace("-", "/");
 	}
 
+	static long getBirthday(String birthday) {
+		return LocalDate.parse(birthday.replace("/", "-")).toDate().getTime();
+	}
 
 
 	static String safetyString(String string) {
