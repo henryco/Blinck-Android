@@ -1,3 +1,3 @@
 # Blinck-Android
 
-<h2>WORK IN PROGRESS</h2>
+<h3>WORK IN PROGRESS</h3>
