@@ -9,70 +9,214 @@
 		android:background="@color/colorProfileEdit">
 	
 	
-	<LinearLayout
-			android:orientation="vertical"
+	<ScrollView
 			android:layout_width="match_parent"
-			android:layout_height="match_parent" android:layout_margin="16dp" android:id="@+id/container_super">
-		<LinearLayout
-				android:orientation="horizontal"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:id="@+id/top_container">
-			
-			
-			<LinearLayout
-					android:orientation="horizontal"
-					android:layout_width="0px"
-					android:layout_height="wrap_content" android:layout_weight="3"
-					android:id="@+id/container_avatar"
-			>
-				<net.henryco.blinck.util.view.SquareImageView
-						android:layout_width="match_parent"
-						android:layout_height="230dp" app:srcCompat="@mipmap/ic_add_white"
-						android:id="@+id/image_avatar" android:scaleType="centerCrop"
-						android:background="@color/colorPrimary"
-						android:layout_margin="@dimen/appbar_padding_top"/>
-			</LinearLayout>
-			
-			<LinearLayout
-					android:orientation="vertical"
-					android:layout_width="0px"
-					android:layout_height="match_parent" android:layout_weight="1"
-					android:id="@+id/container_images">
-				<ImageView
-						android:layout_width="match_parent"
-						android:layout_height="0px" app:srcCompat="@mipmap/ic_add_white"
-						android:id="@+id/image_1"
-						android:layout_weight="1"
-						android:scaleType="center"
-						android:background="@color/colorPrimary" android:layout_margin="@dimen/appbar_padding_top"/>
-				<ImageView
-						android:layout_width="match_parent"
-						android:layout_height="0px"
-						app:srcCompat="@mipmap/ic_add_white" android:id="@+id/image_2"
-						android:layout_weight="1"
-						android:scaleType="center"
-						android:background="@color/colorPrimary"
-						android:layout_margin="@dimen/appbar_padding_top"/>
-				<ImageView
-						android:layout_width="match_parent"
-						android:layout_height="0px" app:srcCompat="@mipmap/ic_add_white"
-						android:id="@+id/image_3" android:layout_weight="1"
-						android:scaleType="center"
-						android:background="@color/colorPrimary"
-						android:layout_margin="@dimen/appbar_padding_top"/>
-			</LinearLayout>
-		</LinearLayout>
+			android:layout_height="match_parent">
 		
 		<LinearLayout
 				android:orientation="vertical"
 				android:layout_width="match_parent"
-				android:layout_height="wrap_content" android:id="@+id/bot_container"
-				android:layout_marginTop="@dimen/activity_vertical_margin">
+				android:layout_height="match_parent" android:layout_margin="@dimen/activity_vertical_margin"
+				android:id="@+id/container_super">
+			<LinearLayout
+					android:orientation="horizontal"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:descendantFocusability="beforeDescendants"
+					android:focusableInTouchMode="true"
+					android:id="@+id/top_container">
+				
+				
+				<LinearLayout
+						android:orientation="horizontal"
+						android:layout_width="0px"
+						android:layout_height="wrap_content" android:layout_weight="3"
+						android:id="@+id/container_avatar"
+				>
+					<net.henryco.blinck.util.view.SquareImageView
+							android:layout_width="match_parent"
+							android:layout_height="230dp" app:srcCompat="@mipmap/ic_add_white"
+							android:id="@+id/image_avatar" android:scaleType="centerCrop"
+							android:background="@color/colorPrimary"
+							android:layout_margin="@dimen/appbar_padding_top"/>
+				</LinearLayout>
+				
+				<LinearLayout
+						android:orientation="vertical"
+						android:layout_width="0px"
+						android:layout_height="match_parent" android:layout_weight="1"
+						android:id="@+id/container_images">
+					<ImageView
+							android:layout_width="match_parent"
+							android:layout_height="0px" app:srcCompat="@mipmap/ic_add_white"
+							android:id="@+id/image_1"
+							android:layout_weight="1"
+							android:scaleType="center"
+							android:background="@color/colorPrimary" android:layout_margin="@dimen/appbar_padding_top"/>
+					<ImageView
+							android:layout_width="match_parent"
+							android:layout_height="0px"
+							app:srcCompat="@mipmap/ic_add_white" android:id="@+id/image_2"
+							android:layout_weight="1"
+							android:scaleType="center"
+							android:background="@color/colorPrimary"
+							android:layout_margin="@dimen/appbar_padding_top"/>
+					<ImageView
+							android:layout_width="match_parent"
+							android:layout_height="0px" app:srcCompat="@mipmap/ic_add_white"
+							android:id="@+id/image_3" android:layout_weight="1"
+							android:scaleType="center"
+							android:background="@color/colorPrimary"
+							android:layout_margin="@dimen/appbar_padding_top"/>
+				</LinearLayout>
+			</LinearLayout>
+			
+			<LinearLayout
+					android:orientation="vertical"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content" android:id="@+id/bot_container"
+					android:layout_marginTop="@dimen/activity_vertical_margin">
+				
+				
+				<LinearLayout
+						android:orientation="vertical"
+						android:layout_width="match_parent"
+						android:layout_height="match_parent" android:layout_marginTop="@dimen/appbar_padding_top"
+						android:visibility="gone">
+					<TextView
+							android:text="First name"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content" android:id="@+id/title_first_name"
+							android:textStyle="bold"
+							android:layout_margin="@dimen/com_facebook_auth_dialog_corner_radius_oversized"/>
+					<LinearLayout
+							android:orientation="horizontal"
+							android:layout_width="match_parent"
+							android:layout_height="match_parent"
+							android:background="@color/cardview_light_background">
+						<EditText
+								android:layout_width="match_parent"
+								android:layout_height="wrap_content"
+								android:inputType="textPersonName"
+								android:text="First name"
+								android:ems="10"
+								android:id="@+id/first_name" android:layout_weight="1"
+								android:singleLine="false" android:selectAllOnFocus="false"
+								android:background="@color/cardview_light_background"
+								android:layout_margin="@dimen/appbar_padding_top"
+								android:focusable="true"
+								android:focusableInTouchMode="true"
+								android:cursorVisible="true"/>
+					</LinearLayout>
+				</LinearLayout>
+				
+				
+				<LinearLayout
+						android:orientation="vertical"
+						android:layout_width="match_parent"
+						android:layout_height="match_parent" android:layout_marginTop="@dimen/activity_vertical_margin"
+						android:visibility="gone">
+					<TextView
+							android:text="Second name"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content" android:id="@+id/title_second_name"
+							android:textStyle="bold"
+							android:layout_margin="@dimen/com_facebook_auth_dialog_corner_radius_oversized"/>
+					<LinearLayout
+							android:orientation="horizontal"
+							android:layout_width="match_parent"
+							android:layout_height="match_parent"
+							android:background="@color/cardview_light_background">
+						<EditText
+								android:layout_width="0dp"
+								android:layout_height="wrap_content"
+								android:inputType="textPersonName"
+								android:text="Second name"
+								android:ems="10"
+								android:id="@+id/second_name" android:layout_weight="1"
+								android:singleLine="false" android:selectAllOnFocus="false"
+								android:background="@color/cardview_light_background"
+								android:layout_margin="@dimen/appbar_padding_top"
+								android:focusable="true"
+								android:focusableInTouchMode="true"
+								android:cursorVisible="true"/>
+					</LinearLayout>
+				</LinearLayout>
+				
+				
+				<LinearLayout
+						android:orientation="vertical"
+						android:layout_width="match_parent"
+						android:layout_height="match_parent" android:layout_marginTop="@dimen/activity_vertical_margin">
+					<TextView
+							android:text="Last name"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content" android:id="@+id/title_last_name"
+							android:textStyle="bold"
+							android:layout_margin="@dimen/com_facebook_auth_dialog_corner_radius_oversized"/>
+					<LinearLayout
+							android:orientation="horizontal"
+							android:layout_width="match_parent"
+							android:layout_height="match_parent"
+							android:background="@color/cardview_light_background">
+						<EditText
+								android:layout_width="0dp"
+								android:layout_height="wrap_content"
+								android:inputType="textPersonName"
+								android:text="Last name"
+								android:ems="10"
+								android:id="@+id/last_name" android:layout_weight="1"
+								android:singleLine="false" android:selectAllOnFocus="false"
+								android:background="@color/cardview_light_background"
+								android:layout_margin="@dimen/appbar_padding_top"
+								android:focusable="true"
+								android:focusableInTouchMode="true"
+								android:cursorVisible="true"/>
+					</LinearLayout>
+				</LinearLayout>
+				
+				
+				<LinearLayout
+						android:orientation="vertical"
+						android:layout_width="match_parent"
+						android:layout_height="match_parent" android:layout_marginTop="@dimen/activity_vertical_margin">
+					<TextView
+							android:text="Birthday"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content" android:id="@+id/title_birthday"
+							android:textStyle="bold"
+							android:layout_margin="@dimen/com_facebook_auth_dialog_corner_radius_oversized"/>
+					<LinearLayout
+							android:orientation="horizontal"
+							android:layout_width="match_parent"
+							android:layout_height="match_parent"
+							android:background="@color/cardview_light_background">
+						<EditText
+								android:layout_width="0dp"
+								android:layout_height="wrap_content"
+								android:inputType="date"
+								android:text="Date"
+								android:ems="10"
+								android:id="@+id/birthday" android:layout_weight="1"
+								android:singleLine="false" android:selectAllOnFocus="false"
+								android:background="@color/cardview_light_background"
+								android:layout_margin="@dimen/appbar_padding_top"
+								android:focusable="false"
+								android:focusableInTouchMode="false"
+								android:cursorVisible="false" android:editable="true"/>
+					</LinearLayout>
+				</LinearLayout>
+				
+				
+				
+				
+			</LinearLayout>
 		</LinearLayout>
 	
+	</ScrollView>
 	
-	</LinearLayout>
+	
+	
 
 
 </android.support.design.widget.CoordinatorLayout>
