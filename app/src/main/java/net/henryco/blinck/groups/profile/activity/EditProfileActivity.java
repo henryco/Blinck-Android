@@ -188,12 +188,15 @@ public class EditProfileActivity extends AppCompatActivity {
 			private final RefreshableTimer timer
 					= new RefreshableTimer(1500, () -> {
 
-				final String s = nick.getText().toString();
+				final String s = nick.getText().toString().trim();
 				profileUpdateService.updateNickname(authorization, s, updated ->
 						runOnUiThread(() -> {
-							if (!updated && !s.equals(nickname))
+							if (!updated)
 								nick.setTextColor(Color.RED);
-							else nick.setTextColor(Color.GREEN);
+							else {
+								nick.setTextColor(Color.GREEN);
+								nickname = s;
+							}
 						})
 				);
 			});
@@ -202,7 +205,9 @@ public class EditProfileActivity extends AppCompatActivity {
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
 			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count) {}
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				nick.setTextColor(Color.BLACK);
+			}
 
 			@Override
 			public void afterTextChanged(Editable s) {
@@ -250,7 +255,7 @@ public class EditProfileActivity extends AppCompatActivity {
 		nameForm.setFirstName(firstName.getText().toString());
 		nameForm.setSecondName(secondName.getText().toString());
 		nameForm.setLastName(lastName.getText().toString());
-		nameForm.setNickname(nick.getText().toString());
+		nameForm.setNickname(nickname);
 
 		form.setAbout(about.getText().toString());
 		form.setBirthday(ProfileHelper.getBirthday(birthday.getText().toString()));
