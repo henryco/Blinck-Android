@@ -1,6 +1,7 @@
 package net.henryco.blinck.groups.profile.activity;
 
 import android.app.DatePickerDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
@@ -21,6 +22,7 @@ import net.henryco.blinck.util.form.user.UserNameForm;
 import net.henryco.blinck.util.form.user.UserProfileForm;
 import net.henryco.blinck.util.reflect.AutoFind;
 import net.henryco.blinck.util.reflect.AutoFinder;
+import net.henryco.blinck.util.task.RefreshableTimer;
 import org.joda.time.LocalDate;
 
 import javax.inject.Inject;
@@ -180,23 +182,31 @@ public class EditProfileActivity extends AppCompatActivity {
 		nick.setText(nickname);
 		nick.addTextChangedListener(new TextWatcher() {
 
+			private final Authorization authorization =
+					Authorization.get(EditProfileActivity.this);
 
+			private final RefreshableTimer timer
+					= new RefreshableTimer(1500, () -> {
 
+				final String s = nick.getText().toString();
+				profileUpdateService.updateNickname(authorization, s, updated ->
+						runOnUiThread(() -> {
+							if (!updated && !s.equals(nickname))
+								nick.setTextColor(Color.RED);
+							else nick.setTextColor(Color.GREEN);
+						})
+				);
+			});
 
 			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-			}
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
 			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-			}
+			public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
 			@Override
 			public void afterTextChanged(Editable s) {
-
-				Log.d("nickname", "updating: " +s.toString());
+				timer.refresh();
 			}
 		});
 	}
@@ -240,7 +250,7 @@ public class EditProfileActivity extends AppCompatActivity {
 		nameForm.setFirstName(firstName.getText().toString());
 		nameForm.setSecondName(secondName.getText().toString());
 		nameForm.setLastName(lastName.getText().toString());
-		nameForm.setNickname(nickname);
+		nameForm.setNickname(nick.getText().toString());
 
 		form.setAbout(about.getText().toString());
 		form.setBirthday(ProfileHelper.getBirthday(birthday.getText().toString()));
